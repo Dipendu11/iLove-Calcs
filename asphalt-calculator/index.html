@@ -169,6 +169,30 @@
         /* 5. FOOTER */
         footer { border-top: 1px solid var(--border); padding: 3rem 0; background: #f9f9f9; text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 5rem; }
         .footer-links a { margin: 0 10px; color: var(--text); display: inline-block; margin-bottom: 5px; }
+        /* Search Results Styling */
+.search-results-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    background: #fff; /* White background for results */
+}
+.search-result-item {
+    display: block;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000;
+}
+.search-result-item:hover {
+    background-color: #f9f9f9;
+    padding-left: 10px; /* Slide effect */
+    transition: all 0.2s;
+}
+.no-results {
+    padding: 20px 0;
+    color: #666;
+}
     </style>
 </head>
 <body>
@@ -191,11 +215,12 @@
     </div>
 
     <div id="searchOverlay" class="overlay">
-        <div class="search-bar-container">
-            <input type="text" id="globalSearchInput" class="search-input" placeholder="Type and hit enter...">
-            <button id="closeSearch" class="close-btn">&times;</button>
-        </div>
+    <div class="search-bar-container">
+        <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. Asphalt, CGPA)..." autocomplete="off">
+        <button id="closeSearch" class="close-btn">&times;</button>
     </div>
+    <div id="searchResults" class="search-results-container"></div>
+</div>
 
 
     <header>

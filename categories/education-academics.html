@@ -1,109 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education Calculators - CalcsHub</title>
-<meta name="description" content="Free academic calculators for CGPA, SGPA, Grades, and Long Division. Fast and accurate.">
-<style>
-:root{--p:#0056b3;--t:#111;--m:#555;--b:#fff;--a:#f8f9fa;--d:#ddd;--w:900px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--b);color:var(--t);line-height:1.5;display:flex;flex-direction:column;min-height:100vh}
-a{text-decoration:none;color:inherit;transition:.2s}
-.wrap{max-width:var(--w);margin:0 auto;padding:0 1.25rem;width:100%}
-header{border-bottom:1px solid var(--d);padding:1rem 0}
-.head-in{display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:800;font-size:1.5rem;letter-spacing:-1px}
-.logo span{color:var(--p)}
-nav a{color:var(--m);font-size:.9rem;font-weight:500}
-nav a:hover{color:var(--p)}
-.hero{padding:3rem 0;text-align:center;background:var(--a);border-bottom:1px solid var(--d)}
-.hero h1{font-size:2rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:.5rem}
-.hero p{color:var(--m);max-width:600px;margin:0 auto}
-.tools{padding:2rem 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
-.card{background:var(--b);border:1px solid var(--d);border-radius:6px;padding:1.25rem;display:block}
-.card:hover{border-color:#999}
-.card h3{font-size:1.1rem;font-weight:700;margin-bottom:.25rem;color:var(--p)}
-.card p{color:var(--m);font-size:.85rem;margin-bottom:.5rem}
-.arrow{font-size:.85rem;font-weight:600;color:var(--t)}
-footer{background:var(--a);border-top:1px solid var(--d);padding:2rem 0;margin-top:auto;text-align:center;font-size:.85rem;color:#999}
-.f-nav{margin-bottom:1rem}
-.f-nav a{margin:0 .5rem;color:var(--m)}
-.f-nav a:hover{color:var(--t);text-decoration:underline}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Calculators - CalcsHub</title>
+    <meta name="description" content="Free education tools: CGPA, SGPA, Percentage, and Long Division calculators.">
+    <link rel="canonical" href="https://calcshub.com/categories/education-academics">
+    
+    <style>
+        /* 1. RESET & VARIABLES */
+        :root {
+            --bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border: #e5e5e5;
+            --accent: #000000;
+            --highlight: #f4f4f4;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 800px; /* Reading width */
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 2. HEADER (Modern Design) */
+        header {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--accent);
+        }
+
+        .menu-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* 3. BREADCRUMBS */
+        .breadcrumbs {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .breadcrumbs a:hover { color: var(--accent); text-decoration: underline; }
+
+        /* 4. PAGE HERO */
+        .page-hero {
+            padding: 1rem 0 2rem 0;
+            border-bottom: 2px solid var(--accent); /* Strong divider */
+            margin-bottom: 1rem;
+        }
+
+        .page-hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        /* 5. TOOL LIST (The Design You Requested) */
+        .tool-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0; /* Generous touch target */
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            transition: background 0.1s;
+        }
+
+        .tool-row:hover {
+            padding-left: 10px; /* Subtle movement on desktop */
+            background-color: var(--highlight);
+        }
+
+        .tool-row:active { background-color: #eee; }
+
+        .arrow { color: #999; font-weight: normal; }
+
+        /* 6. FOOTER (Modern Design) */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            background: #f9f9f9;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-links { margin-bottom: 1.5rem; }
+        .footer-links a { margin: 0 12px; color: var(--text-main); font-weight: 500; }
+        .footer-links a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
-<header>
-<div class="wrap head-in">
-<a href="/" class="logo">CalcsHub<span>.</span></a>
-<nav><a href="/">← Back Home</a></nav>
-</div>
-</header>
+    <header>
+        <div class="container header-inner">
+            <a href="/" class="logo">CalcsHub.</a>
+            <a href="#footer" class="menu-link">Menu</a>
+        </div>
+    </header>
 
-<main>
-<section class="hero">
-<div class="wrap">
-<h1>Education & Academics</h1>
-<p>Calculate grades, convert percentages, and solve long division problems instantly.</p>
-</div>
-</section>
+    <main class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="/">Home</a> <span>/</span> Education
+        </nav>
 
-<section class="tools">
-<div class="wrap grid">
+        <section class="page-hero">
+            <h1>Education & Academics</h1>
+        </section>
 
-<a href="/cgpa-calculator/" class="card">
-<h3>CGPA Calculator</h3>
-<p>Calculate Cumulative Grade Point Average.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+        <div class="tool-list">
+            
+            <a href="/cgpa-calculator" class="tool-row">
+                CGPA Calculator <span class="arrow">→</span>
+            </a>
 
-<a href="/cgpa-percentage-converter/" class="card">
-<h3>CGPA ↔ Percentage</h3>
-<p>Convert 10.0 scale CGPA to percentage.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+            <a href="/sgpa-calculator" class="tool-row">
+                SGPA Calculator <span class="arrow">→</span>
+            </a>
 
-<a href="/sgpa-calculator/" class="card">
-<h3>SGPA Calculator</h3>
-<p>Calculate Semester Grade Point Average.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+            <a href="/cgpa-percentage-converter" class="tool-row">
+                CGPA to Percentage Converter <span class="arrow">→</span>
+            </a>
 
-<a href="/semester-grade-calculator/" class="card">
-<h3>Semester Grade</h3>
-<p>Estimate final grades based on current scores.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+            <a href="/semester-grade-calculator" class="tool-row">
+                Semester Grade Calculator <span class="arrow">→</span>
+            </a>
 
-<a href="/negative-marking-calculator/" class="card">
-<h3>Negative Marking</h3>
-<p>Check exam scores with penalty deduction.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+            <a href="/negative-marking-calculator" class="tool-row">
+                Negative Marking Calculator <span class="arrow">→</span>
+            </a>
 
-<a href="/long-division-calculator/" class="card">
-<h3>Long Division</h3>
-<p>Step-by-step division with remainder.</p>
-<span class="arrow">Open Tool &rarr;</span>
-</a>
+            <a href="/long-division-calculator" class="tool-row">
+                Long Division Calculator <span class="arrow">→</span>
+            </a>
 
-</div>
-</section>
-</main>
+        </div>
 
-<footer>
-<div class="wrap">
-<nav class="f-nav">
-<a href="/about.html">About</a>
-<a href="/contact.html">Contact</a>
-<a href="/privacy.html">Privacy</a>
-<a href="/disclaimer.html">Disclaimer</a>
-</nav>
-<p>&copy; 2024 CalcsHub.</p>
-</div>
-</footer>
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/disclaimer">Disclaimer</a>
+            </div>
+            <p>&copy; 2026 CalcsHub. Use for reference only.</p>
+        </div>
+    </footer>
 
 </body>
 </html>

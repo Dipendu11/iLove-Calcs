@@ -1,6 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ELEMENTS
+    // --- 1. THE TOOL DATABASE ---
+    // Add all your tools here. This is what the search engine looks through.
+    const toolsDB = [
+        { name: "Asphalt Calculator", url: "/asphalt-calculator/", tags: "construction road driveway blacktop" },
+        { name: "CGPA Calculator", url: "/cgpa-calculator/", tags: "education grade marks college" },
+        { name: "SGPA Calculator", url: "/sgpa-calculator/", tags: "education semester grade" },
+        { name: "Salary Hike Calculator", url: "/salary-hike-calculator/", tags: "finance money pay raise" },
+        { name: "Mortgage Payoff", url: "/mortgage-payoff-calculator/", tags: "finance loan house interest" },
+        { name: "Cubic Yard Calculator", url: "/cubic-yard-calculator/", tags: "construction dirt concrete volume" },
+        { name: "Age Calculator", url: "/age-calculator/", tags: "general lifestyle birthday" },
+        // Add more tools here as you build them...
+    ];
+
+    // --- 2. ELEMENTS ---
     const menuBtn = document.getElementById('menuBtn');
     const searchBtn = document.getElementById('searchBtn');
     const closeMenu = document.getElementById('closeMenu');
@@ -8,12 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const menuOverlay = document.getElementById('menuOverlay');
     const searchOverlay = document.getElementById('searchOverlay');
+    
+    const searchInput = document.getElementById('globalSearchInput');
+    const resultsContainer = document.getElementById('searchResults');
 
-    // --- MENU LOGIC ---
+    // --- 3. MENU LOGIC ---
     if(menuBtn && menuOverlay) {
         menuBtn.addEventListener('click', () => {
             menuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop scrolling
+            document.body.style.overflow = 'hidden';
         });
 
         closeMenu.addEventListener('click', () => {
@@ -21,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         });
 
-        // Close when clicking outside content
         menuOverlay.addEventListener('click', (e) => {
             if(e.target === menuOverlay) {
                 menuOverlay.classList.remove('active');
@@ -30,11 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- SEARCH LOGIC ---
+    // --- 4. SEARCH OPEN/CLOSE LOGIC ---
     if(searchBtn && searchOverlay) {
         searchBtn.addEventListener('click', () => {
             searchOverlay.classList.add('active');
-            document.getElementById('globalSearchInput').focus();
+            if(searchInput) {
+                searchInput.value = ''; // Clear previous search
+                searchInput.focus(); // Focus cursor automatically
+                if(resultsContainer) resultsContainer.innerHTML = ''; // Clear previous results
+            }
             document.body.style.overflow = 'hidden';
         });
 
@@ -51,13 +70,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- SEARCH FILTER FUNCTION ---
-    const searchInput = document.getElementById('globalSearchInput');
-    if(searchInput) {
-        searchInput.addEventListener('keydown', (e) => {
-            if(e.key === 'Enter') {
-                // You can replace this with a real search results page later
-                alert("Search functionality coming soon! You typed: " + searchInput.value);
+    // --- 5. REAL SEARCH FUNCTIONALITY ---
+    if(searchInput && resultsContainer) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            resultsContainer.innerHTML = ''; // Clear current list
+
+            if(query.length === 0) return; // Don't show anything if empty
+
+            // Filter the DB
+            const matches = toolsDB.filter(tool => {
+                return tool.name.toLowerCase().includes(query) || 
+                       tool.tags.toLowerCase().includes(query);
+            });
+
+            // Display Results
+            if(matches.length > 0) {
+                matches.forEach(tool => {
+                    const link = document.createElement('a');
+                    link.href = tool.url;
+                    link.className = 'search-result-item';
+                    link.textContent = tool.name;
+                    resultsContainer.appendChild(link);
+                });
+            } else {
+                const noResult = document.createElement('div');
+                noResult.className = 'no-results';
+                noResult.textContent = 'No tools found matching "' + query + '"';
+                resultsContainer.appendChild(noResult);
             }
         });
     }

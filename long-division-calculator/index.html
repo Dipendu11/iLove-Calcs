@@ -12,9 +12,9 @@
         :root {
             --bg-body: #f8fafc;
             --surface: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
             
             --love-pink: #db2777;
             --calc-blue: #2563eb;
@@ -52,28 +52,63 @@
             outline: 2px solid var(--calc-blue); outline-offset: 2px;
         }
         
-        /* FIX: Reverted to 800px to match Homepage perfectly */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+        /* 3. LAYOUT CONTAINERS */
+        
+        /* Outer Container: Matches Homepage (1000px) so Header aligns perfectly */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Inner Limiter: Keeps the Calculator & Text readable (800px) */
+        .content-limiter { max-width: 800px; margin: 0 auto; }
+
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
 
-        /* 3. HEADER */
+        /* 4. HEADER (Exact match to Homepage) */
         header { 
-            padding: 1rem 0; position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem;
+            padding: 1rem 0; 
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(255, 255, 255, 0.85); /* Matches Homepage */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
         }
+
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         .header-left { display: flex; align-items: center; gap: 1.2rem; }
-        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 48px; height: 48px; }
+
+        .icon-btn {
+            background: transparent; border: none; cursor: pointer; padding: 8px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; width: 44px; height: 44px;
+            transition: var(--transition);
+        }
+        .icon-btn:hover { background: rgba(0,0,0,0.04); }
+
         .burger-icon { width: 22px; height: 2.5px; background: var(--text-main); position: relative; border-radius: 2px; }
-        .burger-icon::before, .burger-icon::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px; }
+        .burger-icon::before, .burger-icon::after {
+            content: ''; position: absolute; left: 0;
+            width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px;
+        }
         .burger-icon::before { top: -7px; } .burger-icon::after { top: 7px; }
         .search-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; }
-        .logo-wrapper { display: flex; align-items: baseline; gap: 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); }
-        .logo-love { color: var(--love-pink); } .logo-calc { color: var(--calc-blue); }
-        .logo-u-svg { width: 22px; height: 22px; display: block; margin-left: 4px; margin-right: 2px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-        /* 4. CALCULATOR CARD */
+        /* LOGO */
+        .logo-wrapper {
+            display: flex; align-items: baseline; gap: 0; 
+            font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+        .logo-love { color: var(--love-pink); }
+        .logo-calc { color: var(--calc-blue); }
+        
+        .logo-u-svg {
+            width: 22px; height: 22px; display: block;
+            margin-left: 4px; margin-right: 2px;
+            transform: rotate(-15deg); transform-origin: bottom center;
+            position: relative; top: 2px;
+        }
+
+        /* 5. CALCULATOR STYLES */
         .calculator-card {
             background: var(--surface); padding: 2rem;
             border-radius: var(--radius-lg); border: 1px solid var(--border);
@@ -102,7 +137,7 @@
             background: #fff; appearance: none; min-height: 48px;
         }
 
-        /* 5. OPTIONS BAR */
+        /* Options Bar */
         .options-bar {
             background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
             border: 1px solid var(--border); margin-bottom: 1.5rem;
@@ -114,7 +149,7 @@
         .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
         .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
 
-        /* 6. BUTTONS */
+        /* Buttons */
         .btn-calc { 
             width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
             padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
@@ -137,7 +172,7 @@
         }
         .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
 
-        /* 7. SOLVER AREA */
+        /* Solver Area */
         .solver-container {
             display: none; 
             margin-top: 2rem;
@@ -157,7 +192,7 @@
             display: flex; justify-content: center;
         }
 
-        /* Grid Overlay (Inside Wrapper) */
+        /* Grid Overlay */
         .grid-overlay {
             display: none; 
             position: absolute; 
@@ -179,9 +214,7 @@
         .solver-container.dyscalculia-active .math-display-pre {
             font-size: 1.6rem; letter-spacing: 4px; color: #000 !important;
         }
-        .solver-container.dyscalculia-active .grid-overlay { 
-            display: block; 
-        }
+        .solver-container.dyscalculia-active .grid-overlay { display: block; }
 
         .math-display-pre {
             font-family: 'Courier New', Courier, monospace; 
@@ -194,12 +227,10 @@
             z-index: 2; position: relative;
         }
 
-        /* Highlights */
         .hl-divisor { color: var(--color-divisor); }
         .hl-quotient { color: var(--color-quotient); }
         .hl-sub { color: var(--color-sub); }
 
-        /* Explainer */
         .step-explanation-box {
             background: #eff6ff; border-left: 4px solid var(--calc-blue);
             padding: 1rem; margin-top: 1.5rem; border-radius: 8px;
@@ -216,15 +247,14 @@
         .btn-nav.primary { background: var(--calc-blue); color: white; border: none; }
         .btn-nav.primary:hover:not(:disabled) { background: #1d4ed8; }
 
-        /* Signature */
         .tool-signature { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
         .sig-love { color: var(--love-pink); font-weight: 700; }
         .sig-logic { color: var(--calc-blue); font-weight: 700; }
 
-        /* Standard Overlays & Footer */
+        /* 6. OVERLAYS & FOOTER */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
         .overlay.active { opacity: 1; visibility: visible; }
-        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
+        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; box-shadow: 10px 0 25px rgba(0,0,0,0.1); }
         .overlay.active .menu-drawer { transform: translateX(0); }
         .search-bar-container { position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; }
         .overlay.active .search-bar-container { transform: translateY(0); }
@@ -240,119 +270,151 @@
 </head>
 <body>
 
-    <div id="menuOverlay" class="overlay" aria-hidden="true"><div class="menu-drawer"><div class="drawer-header"><span style="font-weight:800; font-size:1.4rem;">Menu</span><button id="closeMenu" class="close-btn">&times;</button></div><nav class="nav-links"><a href="/">Home</a><a href="/categories/construction-materials">Construction</a><a href="/categories/education-academics">Education</a><a href="/categories/salary-finance">Finance</a><a href="/categories/general-lifestyle">Lifestyle</a><a href="/contact">Contact Us</a></nav></div></div>
-    <div id="searchOverlay" class="overlay" aria-hidden="true"><div class="search-bar-container"><input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools..." autocomplete="off"><button id="closeSearch" class="close-btn">&times;</button></div><div id="searchResults" class="search-results-container"></div></div>
+    <div id="menuOverlay" class="overlay" aria-hidden="true">
+        <div class="menu-drawer">
+            <div class="drawer-header">
+                <span style="font-weight:800; font-size:1.4rem;">Menu</span>
+                <button id="closeMenu" class="close-btn" aria-label="Close Menu">&times;</button>
+            </div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/categories/construction-materials">Construction</a>
+                <a href="/categories/education-academics">Education</a>
+                <a href="/categories/salary-finance">Finance</a>
+                <a href="/categories/general-lifestyle">Lifestyle</a>
+                <a href="/contact">Contact Us</a>
+            </nav>
+        </div>
+    </div>
+
+    <div id="searchOverlay" class="overlay" aria-hidden="true">
+        <div class="search-bar-container">
+            <label for="globalSearchInput" class="sr-only" style="display:none;">Search Tools</label>
+            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. Asphalt, CGPA)..." autocomplete="off">
+            <button id="closeSearch" class="close-btn" aria-label="Close Search">&times;</button>
+        </div>
+        <div id="searchResults" class="search-results-container"></div>
+    </div>
 
     <header>
         <div class="container header-inner">
             <div class="header-left">
-                <button id="menuBtn" class="icon-btn" aria-label="Menu"><div class="burger-icon"></div></button>
-                <a href="/" class="logo-wrapper">
+                <button id="menuBtn" class="icon-btn" aria-label="Open Menu">
+                    <div class="burger-icon"></div>
+                </button>
+                <a href="/" class="logo-wrapper" aria-label="LoveU Calc Home">
                     <span class="logo-love">Love</span>
-                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <defs><linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777" /><stop offset="100%" style="stop-color:#2563eb" /></linearGradient></defs>
                         <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
                     </svg>
                     <span class="logo-calc">Calc.</span>
                 </a>
             </div>
-            <button id="searchBtn" class="icon-btn search-icon" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+            <button id="searchBtn" class="icon-btn search-icon" aria-label="Open Search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
         </div>
     </header>
 
     <main class="container">
         
-        <nav class="breadcrumbs">
-            <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
-        </nav>
+        <div class="content-limiter">
+            
+            <nav class="breadcrumbs">
+                <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
+            </nav>
 
-        <div style="margin-bottom: 2rem;">
-            <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals.</p>
-        </div>
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals.</p>
+            </div>
 
-        <div class="calculator-card">
-            <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
-                
-                <div class="input-grid">
-                    <div>
-                        <label for="dividend">Dividend</label>
-                        <div class="input-group">
-                            <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="divisor">Divisor</label>
-                        <div class="input-group">
-                            <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="options-bar">
-                    <div class="toggle-group">
-                        <label class="toggle-label">
-                            <input type="radio" name="mode" value="remainder" checked> Remainder
-                        </label>
-                        <label class="toggle-label">
-                            <input type="radio" name="mode" value="decimal"> Decimal
-                        </label>
-                    </div>
+            <div class="calculator-card">
+                <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
                     
-                    <div class="toggle-group">
-                        <label style="width:100%">
-                            <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
-                            <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
-                                <option value="us">US/UK (Bracket)</option>
-                                <option value="eu">Europe (Galley)</option>
-                                <option value="ger">Germany (Colon)</option>
-                            </select>
-                        </label>
+                    <div class="input-grid">
+                        <div>
+                            <label for="dividend">Dividend</label>
+                            <div class="input-group">
+                                <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="divisor">Divisor</label>
+                            <div class="input-group">
+                                <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="toggle-group">
-                        <label class="toggle-label" title="High contrast, readable font, grid lines">
-                            <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
-                            <span>Access Mode (Dyscalculia)</span>
-                        </label>
+                    <div class="options-bar">
+                        <div class="toggle-group">
+                            <label class="toggle-label">
+                                <input type="radio" name="mode" value="remainder" checked> Remainder
+                            </label>
+                            <label class="toggle-label">
+                                <input type="radio" name="mode" value="decimal"> Decimal
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <label style="width:100%">
+                                <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
+                                <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
+                                    <option value="us">US/UK (Bracket)</option>
+                                    <option value="eu">Europe (Galley)</option>
+                                    <option value="ger">Germany (Colon)</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle-label" title="High contrast, readable font, grid lines">
+                                <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
+                                <span>Access Mode (Dyscalculia)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-calc">Solve Step-by-Step</button>
+                    
+                    <div class="btn-secondary-grid">
+                        <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
+                        <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
+                    </div>
+
+                </form>
+
+                <div id="solverArea" class="solver-container">
+                    <div class="math-board-wrapper">
+                        <div class="grid-overlay"></div>
+                        <div id="mathBoard" class="math-display-pre"></div>
+                    </div>
+
+                    <div class="step-explanation-box">
+                        <span id="explanationText">Click "Next" to start.</span>
+                    </div>
+
+                    <div class="nav-controls">
+                        <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
+                        <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
+                        <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-calc">Solve Step-by-Step</button>
-                
-                <div class="btn-secondary-grid">
-                    <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
-                    <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
-                </div>
-
-            </form>
-
-            <div id="solverArea" class="solver-container">
-                <div class="math-board-wrapper">
-                    <div class="grid-overlay"></div>
-                    <div id="mathBoard" class="math-display-pre"></div>
-                </div>
-
-                <div class="step-explanation-box">
-                    <span id="explanationText">Click "Next" to start.</span>
-                </div>
-
-                <div class="nav-controls">
-                    <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
-                    <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
-                    <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
+                <div class="tool-signature">
+                    Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
                 </div>
             </div>
 
-            <div class="tool-signature">
-                Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
-            </div>
+            <article class="content-area">
+                <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
+                <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
+                <p style="color: var(--text-main); margin-top: 1rem;">This calculator helps you visualize this algorithm, making it easier to learn and check your homework.</p>
+            </article>
+
         </div>
-
-        <article class="content-area">
-            <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
-            <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
-        </article>
     </main>
 
     <footer id="footer">

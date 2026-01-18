@@ -130,22 +130,27 @@
         .btn-res { background: transparent; border: 1px solid var(--bord); color: var(--mut); padding: 12px; border-radius: var(--rad); font-weight: 600; cursor: pointer; width: 100%; }
         .btn-res:hover { border-color: #ef4444; color: #ef4444; }
 
-        /* Solver Area */
+        /* Solver */
         .solver { display: none; margin-top: 2rem; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* FIX: max-height and overflow:auto prevent box from exploding vertically */
+        /* FIX: Fixed height limit + Auto Scrollbars */
         .board-wrap { 
             background: #fff; 
             padding: 2rem; 
             border-radius: var(--rad); 
             border: 1px solid var(--bord); 
-            position: relative; 
+            
+            /* Sizing & Scroll */
+            width: 100%;
             min-height: 150px; 
+            max-height: 50vh; /* Limits vertical growth (50% of screen) */
+            overflow: auto;   /* Scrollbars appear instantly on overflow */
+            
+            /* Layout */
             display: flex; 
             justify-content: flex-start;
-            max-height: 600px;  /* Limits vertical height */
-            overflow: auto;     /* Adds scrollbars if content is too big */
+            align-items: flex-start;
         }
         
         .math-pre { font-family: 'Courier New', monospace; font-size: 1.4rem; line-height: 1.4; white-space: pre; font-weight: 700; letter-spacing: 2px; z-index: 2; position: relative; margin-right: 2rem; }
@@ -299,6 +304,7 @@
             <article class="content">
                 <h2>What is Long Division?</h2>
                 <p>Long division is a standard arithmetic algorithm used for dividing multi-digit numbers (the <strong>dividend</strong>) by another number (the <strong>divisor</strong>). Unlike simple division, which can often be done mentally, long division breaks a complex problem down into a sequence of smaller, manageable steps. This step-by-step process is crucial for ensuring accuracy, especially when dealing with large numbers or finding remainders.</p>
+                
                 <p>This calculator acts as a digital tutor. Instead of just giving you the answer (like a standard calculator), it visualizes the entire process, showing you exactly where each number comes from. It is an essential tool for students mastering arithmetic concepts in grades 3 through 6.</p>
 
                 <h2>Who Should Use This Tool?</h2>

@@ -12,13 +12,13 @@
         :root {
             --bg-body: #f8fafc;
             --surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --text-main: #0f172a; /* Darker for A11y (Slate 900) */
+            --text-muted: #475569; /* Darker for A11y (Slate 600) - Passes WCAG AA */
+            --border: #cbd5e1;     /* Slightly darker border for visibility */
             
             --love-pink: #db2777;
             --calc-blue: #2563eb;
-            --success-green: #10b981; 
+            --success-green: #059669; /* Darker green for white bg contrast */
             --gradient-brand: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
             
             --radius-lg: 16px;
@@ -42,6 +42,10 @@
 
         main { flex: 1; width: 100%; }
         a { text-decoration: none; color: inherit; transition: var(--transition); }
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--calc-blue);
+            outline-offset: 2px;
+        }
         
         .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
@@ -49,12 +53,13 @@
         /* 3. HEADER */
         header { 
             padding: 1rem 0; position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.95); /* Increased opacity for contrast */
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem;
         }
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         .header-left { display: flex; align-items: center; gap: 1.2rem; }
-        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 44px; height: 44px; }
+        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 48px; height: 48px; /* 48px Touch Target */ }
         .burger-icon { width: 22px; height: 2.5px; background: var(--text-main); position: relative; border-radius: 2px; }
         .burger-icon::before, .burger-icon::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px; }
         .burger-icon::before { top: -7px; } .burger-icon::after { top: 7px; }
@@ -63,7 +68,7 @@
         .logo-love { color: var(--love-pink); } .logo-calc { color: var(--calc-blue); }
         .logo-u-svg { width: 22px; height: 22px; display: block; margin-left: 4px; margin-right: 2px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-        /* 4. MODERN FORM STYLES (LoveU Design) */
+        /* 4. MODERN FORM STYLES */
         .calculator-card {
             background: var(--surface); padding: 2rem;
             border-radius: var(--radius-lg); border: 1px solid var(--border);
@@ -73,35 +78,64 @@
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
         @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
 
-        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-main); }
+        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-main); }
         
-        .input-group { display: flex; width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); transition: var(--transition); }
+        .input-group { 
+            display: flex; width: 100%; border-radius: var(--radius-md); overflow: hidden; 
+            border: 1px solid var(--border); transition: var(--transition); 
+        }
         .input-group:focus-within { border-color: var(--calc-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .input-group input { flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; color: var(--text-main); }
-        .input-group select, .static-unit { background: #f1f5f9; border: none; border-left: 1px solid var(--border); padding: 0 16px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; outline: none; white-space: nowrap; }
         
-        .full-select { width: 100%; padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border); font-size: 1rem; color: var(--text-main); background: #fff; appearance: none; }
+        /* A11y Fix: Minimum height 48px for inputs */
+        .input-group input { 
+            flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; 
+            color: var(--text-main); min-height: 48px; background: #fff;
+        }
+        .input-group select, .static-unit { 
+            background: #f1f5f9; border: none; border-left: 1px solid var(--border); 
+            padding: 0 16px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); 
+            display: flex; align-items: center; outline: none; white-space: nowrap; min-height: 48px;
+        }
+        
+        .full-select { 
+            width: 100%; padding: 12px 16px; border-radius: var(--radius-md); 
+            border: 1px solid var(--border); font-size: 1rem; color: var(--text-main); 
+            background: #fff; appearance: none; min-height: 48px;
+        }
 
         /* Toggles & Hidden Sections */
-        .toggle-label { display: flex; align-items: center; cursor: pointer; margin: 1.5rem 0; font-weight: 700; background: #f8fafc; padding: 1rem; border-radius: var(--radius-md); border: 1px dashed var(--border); }
-        .toggle-checkbox { width: 20px; height: 20px; margin-right: 12px; accent-color: var(--calc-blue); cursor: pointer; }
+        .toggle-label { 
+            display: flex; align-items: center; cursor: pointer; margin: 1.5rem 0; 
+            font-weight: 700; background: #f8fafc; padding: 1rem; border-radius: var(--radius-md); 
+            border: 1px dashed var(--border); 
+        }
+        .toggle-checkbox { width: 24px; height: 24px; margin-right: 12px; accent-color: var(--calc-blue); cursor: pointer; }
         
         .hidden-section { display: none; padding-top: 1rem; animation: slideDown 0.3s ease-out; }
         .hidden-section.show { display: block; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         .advanced-toggle { 
-            color: var(--calc-blue); font-weight: 600; cursor: pointer; 
-            font-size: 0.95rem; margin: 1.5rem 0; display: inline-flex; align-items: center; 
+            background: none; border: none; padding: 0; font-family: inherit; /* Reset button styles */
+            color: var(--calc-blue); font-weight: 700; cursor: pointer; 
+            font-size: 1rem; margin: 1.5rem 0; display: inline-flex; align-items: center; 
         }
         .advanced-toggle:hover { text-decoration: underline; }
 
         /* Buttons */
-        .btn-calc { width: 100%; background: var(--gradient-brand); color: #fff; border: none; padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .btn-calc { 
+            width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
+            padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; 
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); min-height: 54px; /* Large touch target */
+        }
         .btn-calc:hover { transform: translateY(-2px); }
-        .btn-clear { background: none; border: none; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; cursor: pointer; text-decoration: underline; width: 100%; }
+        .btn-clear { 
+            background: none; border: none; color: var(--text-muted); font-size: 0.9rem; 
+            margin-top: 1rem; cursor: pointer; text-decoration: underline; width: 100%; padding: 12px;
+        }
 
-        /* RESULTS (Matching your IDs) */
+        /* RESULTS */
         .result-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 2rem; margin-top: 2rem; text-align: center; display: none; }
         .result-box.visible { display: block; animation: popIn 0.3s; }
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -114,7 +148,7 @@
 
         /* Cost Bars */
         .cost-bar-wrapper { margin-top: 1.5rem; width: 100%; }
-        .cost-bar { display: flex; height: 20px; border-radius: 10px; overflow: hidden; width: 100%; background: #e2e8f0; }
+        .cost-bar { display: flex; height: 24px; border-radius: 12px; overflow: hidden; width: 100%; background: #e2e8f0; }
         .bar-segment { height: 100%; transition: width 0.5s ease-out; }
         .legend { display: flex; justify-content: center; gap: 15px; margin-top: 10px; font-size: 0.85rem; }
         .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
@@ -128,7 +162,7 @@
         footer { border-top: 1px solid var(--border); padding: 4rem 0; background: var(--surface); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; }
         .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
         
-        /* Overlays (Kept for your script.js) */
+        /* Overlays */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
         .overlay.active { opacity: 1; visibility: visible; }
         .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
@@ -136,7 +170,7 @@
         .search-bar-container { position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; }
         .overlay.active .search-bar-container { transform: translateY(0); }
         .drawer-header { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; }
-        .close-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--text-muted); }
+        .close-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 10px; }
         .nav-links a { display: block; padding: 15px 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
         .search-input { width: 100%; padding: 12px 0; font-size: 1.2rem; border: none; border-bottom: 2px solid var(--border); outline: none; color: var(--text-main); }
         .search-results-container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; background: var(--surface); }
@@ -145,11 +179,11 @@
 </head>
 <body>
 
-    <div id="menuOverlay" class="overlay">
+    <div id="menuOverlay" class="overlay" aria-hidden="true">
         <div class="menu-drawer">
             <div class="drawer-header">
                 <span style="font-weight:800; font-size:1.4rem;">Menu</span>
-                <button id="closeMenu" class="close-btn">&times;</button>
+                <button id="closeMenu" class="close-btn" aria-label="Close Menu">&times;</button>
             </div>
             <nav class="nav-links">
                 <a href="/">Home</a>
@@ -162,10 +196,11 @@
         </div>
     </div>
 
-    <div id="searchOverlay" class="overlay">
+    <div id="searchOverlay" class="overlay" aria-hidden="true">
         <div class="search-bar-container">
+            <label for="globalSearchInput" class="sr-only" style="display:none;">Search Tools</label>
             <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. Asphalt, CGPA)..." autocomplete="off">
-            <button id="closeSearch" class="close-btn">&times;</button>
+            <button id="closeSearch" class="close-btn" aria-label="Close Search">&times;</button>
         </div>
         <div id="searchResults" class="search-results-container"></div>
     </div>
@@ -176,24 +211,24 @@
                 <button id="menuBtn" class="icon-btn" aria-label="Open Menu">
                     <div class="burger-icon"></div>
                 </button>
-                <a href="/" class="logo-wrapper">
+                <a href="/" class="logo-wrapper" aria-label="LoveU Calc Home">
                     <span class="logo-love">Love</span>
-                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <defs><linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777" /><stop offset="100%" style="stop-color:#2563eb" /></linearGradient></defs>
                         <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
                     </svg>
                     <span class="logo-calc">Calc.</span>
                 </a>
             </div>
-            <button id="searchBtn" class="icon-btn search-icon" aria-label="Search">
-                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <button id="searchBtn" class="icon-btn search-icon" aria-label="Open Search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </div>
     </header>
 
     <main class="container">
-        <nav class="breadcrumbs">
-            <a href="/">Home</a> <span>/</span> <a href="/categories/construction-materials">Construction</a>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/categories/construction-materials">Construction</a>
         </nav>
 
         <div style="margin-bottom: 2rem;">
@@ -208,7 +243,7 @@
                     <label for="length">Length</label>
                     <div class="input-group">
                         <input type="number" id="length" placeholder="0" inputmode="decimal">
-                        <select id="lengthUnit">
+                        <select id="lengthUnit" aria-label="Length Unit">
                             <option value="ft">Feet</option>
                             <option value="m">Meters</option>
                             <option value="yd">Yards</option>
@@ -221,7 +256,7 @@
                     <label for="width">Width</label>
                     <div class="input-group">
                         <input type="number" id="width" placeholder="0" inputmode="decimal">
-                        <select id="widthUnit">
+                        <select id="widthUnit" aria-label="Width Unit">
                             <option value="ft">Feet</option>
                             <option value="m">Meters</option>
                             <option value="yd">Yards</option>
@@ -237,7 +272,7 @@
                     <label for="depth">Asphalt Thickness</label>
                     <div class="input-group">
                         <input type="number" id="depth" placeholder="e.g. 3" inputmode="decimal">
-                        <select id="depthUnit">
+                        <select id="depthUnit" aria-label="Thickness Unit">
                             <option value="in">Inches</option>
                             <option value="cm">CM</option>
                             <option value="ft">Feet</option>
@@ -255,7 +290,7 @@
                 </div>
             </div>
 
-            <label class="toggle-label">
+            <label class="toggle-label" for="subBaseCheck">
                 <input type="checkbox" id="subBaseCheck" class="toggle-checkbox"> Include Sub-Base (Gravel)?
             </label>
 
@@ -265,7 +300,7 @@
                         <label for="baseDepth">Gravel Thickness</label>
                         <div class="input-group">
                             <input type="number" id="baseDepth" placeholder="e.g. 6" inputmode="decimal">
-                            <div class="static-unit">Inches</div>
+                            <div class="static-unit" aria-hidden="true">Inches</div>
                         </div>
                     </div>
                     <div>
@@ -275,7 +310,7 @@
                 </div>
             </div>
 
-            <div class="advanced-toggle" id="advToggle">Show Cost & Compaction Settings ▼</div>
+            <button class="advanced-toggle" id="advToggle" type="button">Show Cost & Compaction Settings ▼</button>
 
             <div id="advSection" class="hidden-section">
                 <div class="input-grid">
@@ -310,7 +345,7 @@
             <button class="btn-calc" id="calcBtn">Calculate Tonnage</button>
             <div style="text-align:center;"><button class="btn-clear" id="clearBtn">Reset</button></div>
 
-            <div class="result-box" id="resultBox">
+            <div class="result-box" id="resultBox" aria-live="polite">
                 <div class="result-label">Hot Mix Asphalt Required</div>
                 <div class="result-value" id="resTons">0.00</div>
                 <div class="result-label">TONS</div>
@@ -323,7 +358,7 @@
                     <div class="result-label" style="color:#000;">Estimated Total Cost</div>
                     <div style="font-size: 2rem; font-weight:800; color:var(--success-green);" id="resTotalCost">$0.00</div>
                     
-                    <div class="cost-bar-wrapper" id="costBarWrapper">
+                    <div class="cost-bar-wrapper" id="costBarWrapper" aria-hidden="true">
                         <div class="cost-bar">
                             <div class="bar-segment" id="barMaterial" style="background:var(--success-green); width:50%;"></div>
                             <div class="bar-segment" id="barLabor" style="background:var(--calc-blue); width:50%;"></div>

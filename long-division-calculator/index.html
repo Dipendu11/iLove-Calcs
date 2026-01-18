@@ -12,9 +12,9 @@
         :root {
             --bg-body: #f8fafc;
             --surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #cbd5e1;
             
             --love-pink: #db2777;
             --calc-blue: #2563eb;
@@ -53,22 +53,16 @@
         }
         
         /* 3. LAYOUT CONTAINERS */
-        
-        /* Outer Container: Matches Homepage (1000px) so Header aligns perfectly */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
-        
-        /* Inner Limiter: Keeps the Calculator & Text readable (800px) */
         .content-limiter { max-width: 800px; margin: 0 auto; }
-
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
 
-        /* 4. HEADER (Exact match to Homepage) */
+        /* 4. HEADER */
         header { 
             padding: 1rem 0; 
             position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.85); /* Matches Homepage */
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             margin-bottom: 2rem;
         }
@@ -92,7 +86,6 @@
         .burger-icon::before { top: -7px; } .burger-icon::after { top: 7px; }
         .search-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; }
 
-        /* LOGO */
         .logo-wrapper {
             display: flex; align-items: baseline; gap: 0; 
             font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
@@ -100,7 +93,6 @@
         }
         .logo-love { color: var(--love-pink); }
         .logo-calc { color: var(--calc-blue); }
-        
         .logo-u-svg {
             width: 22px; height: 22px; display: block;
             margin-left: 4px; margin-right: 2px;
@@ -137,7 +129,6 @@
             background: #fff; appearance: none; min-height: 48px;
         }
 
-        /* Options Bar */
         .options-bar {
             background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
             border: 1px solid var(--border); margin-bottom: 1.5rem;
@@ -149,7 +140,6 @@
         .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
         .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
 
-        /* Buttons */
         .btn-calc { 
             width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
             padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
@@ -172,7 +162,7 @@
         }
         .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
 
-        /* Solver Area */
+        /* 6. SOLVER AREA & FIXES */
         .solver-container {
             display: none; 
             margin-top: 2rem;
@@ -189,10 +179,11 @@
             text-align: left;
             position: relative;
             min-height: 150px;
-            display: flex; justify-content: center;
+            /* FIX: Use flex-start instead of center so scrollbar works for wide content */
+            display: flex; 
+            justify-content: flex-start;
         }
 
-        /* Grid Overlay */
         .grid-overlay {
             display: none; 
             position: absolute; 
@@ -225,6 +216,8 @@
             font-weight: 700;
             letter-spacing: 2px;
             z-index: 2; position: relative;
+            /* Ensures numbers aren't flush against the left wall */
+            margin-right: 2rem; 
         }
 
         .hl-divisor { color: var(--color-divisor); }
@@ -251,10 +244,10 @@
         .sig-love { color: var(--love-pink); font-weight: 700; }
         .sig-logic { color: var(--calc-blue); font-weight: 700; }
 
-        /* 6. OVERLAYS & FOOTER */
+        /* 7. OVERLAYS & FOOTER */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
         .overlay.active { opacity: 1; visibility: visible; }
-        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; box-shadow: 10px 0 25px rgba(0,0,0,0.1); }
+        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
         .overlay.active .menu-drawer { transform: translateX(0); }
         .search-bar-container { position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; }
         .overlay.active .search-bar-container { transform: translateY(0); }
@@ -304,7 +297,7 @@
                 </button>
                 <a href="/" class="logo-wrapper" aria-label="LoveU Calc Home">
                     <span class="logo-love">Love</span>
-                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs><linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777" /><stop offset="100%" style="stop-color:#2563eb" /></linearGradient></defs>
                         <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
                     </svg>
@@ -312,7 +305,7 @@
                 </a>
             </div>
             <button id="searchBtn" class="icon-btn search-icon" aria-label="Open Search">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </div>
     </header>
@@ -411,7 +404,6 @@
             <article class="content-area">
                 <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
                 <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
-                <p style="color: var(--text-main); margin-top: 1rem;">This calculator helps you visualize this algorithm, making it easier to learn and check your homework.</p>
             </article>
 
         </div>

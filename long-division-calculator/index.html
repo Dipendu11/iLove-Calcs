@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Long Division Calculator - Step-by-Step Solver with Remainders</title>
-    <meta name="description" content="Free step-by-step long division calculator. Visualizes the long division process using US, European, or German notation. Includes a free PDF worksheet generator.">
-    <meta name="keywords" content="long division calculator, step by step division, division with remainder, math solver, free math worksheets, dyscalculia tool">
+    <title>Long Division Calculator - Step-by-Step with Remainders | LoveU Calc</title>
+    <meta name="description" content="Free step-by-step long division calculator. Solves division problems with remainders or decimals. Includes visual work, notation options, and easy-to-follow instructions.">
+    <meta name="keywords" content="long division calculator, division with remainders, step by step division, math solver, long division worksheets, DMSB method">
     <meta name="author" content="LoveU Calc">
     <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://loveucalc.com/long-division-calculator/">
     <meta property="og:title" content="Long Division Calculator - Step-by-Step Solver">
-    <meta property="og:description" content="Master long division instantly. See the full work, generate worksheets, and learn the process.">
+    <meta property="og:description" content="Master long division instantly. Get the quotient, remainder, and full work shown for any problem.">
     <meta property="og:image" content="https://loveucalc.com/assets/og-division.png">
 
     <script type="application/ld+json">
@@ -23,16 +23,16 @@
           "@type": "WebApplication",
           "name": "Long Division Calculator",
           "url": "https://loveucalc.com/long-division-calculator/",
+          "description": "A comprehensive long division calculator that provides step-by-step solutions for division problems, supporting both remainder and decimal modes.",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "All",
-          "description": "A free online tool that solves long division problems step-by-step, supports multiple notations, and generates PDF worksheets.",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
           "@type": "HowTo",
-          "name": "How to Perform Long Division",
+          "name": "How to Perform Long Division (DMSB Method)",
           "step": [
-            { "@type": "HowToStep", "name": "Divide", "text": "Check how many times the divisor fits into the first digit(s) of the dividend." },
+            { "@type": "HowToStep", "name": "Divide", "text": "Determine how many times the divisor fits into the first digit(s) of the dividend." },
             { "@type": "HowToStep", "name": "Multiply", "text": "Multiply that count by the divisor and write the result under the dividend." },
             { "@type": "HowToStep", "name": "Subtract", "text": "Subtract the product from the dividend digits to find the remainder." },
             { "@type": "HowToStep", "name": "Bring Down", "text": "Bring down the next digit of the dividend and repeat the cycle." }
@@ -49,7 +49,7 @@
             --surface: #ffffff;
             --text-main: #0f172a;
             --text-muted: #475569;
-            --border: #e2e8f0;
+            --border: #cbd5e1;
             
             --love-pink: #db2777;
             --calc-blue: #2563eb;
@@ -87,10 +87,11 @@
             outline: 2px solid var(--calc-blue); outline-offset: 2px;
         }
         
-        /* 3. LAYOUT (MATCHING HOMEPAGE EXACTLY) */
+        /* 3. LAYOUT */
+        /* Outer Container: Matches Homepage EXACTLY (1000px) */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
         
-        /* Content Limiter: Keeps text/calculator narrow (800px) but header stays wide (1000px) */
+        /* Inner Limiter: Keeps the Calculator & Text readable (800px) */
         .content-limiter { max-width: 800px; margin: 0 auto; }
 
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
@@ -165,7 +166,6 @@
             background: #fff; appearance: none; min-height: 48px;
         }
 
-        /* Options Bar */
         .options-bar {
             background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
             border: 1px solid var(--border); margin-bottom: 1.5rem;
@@ -177,7 +177,6 @@
         .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
         .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
 
-        /* Buttons */
         .btn-calc { 
             width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
             padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
@@ -217,9 +216,8 @@
             text-align: left;
             position: relative;
             min-height: 150px;
-            /* Flex-Start allows scrolling right for wide equations */
             display: flex; 
-            justify-content: flex-start;
+            justify-content: flex-start; /* Corrects scrolling */
         }
 
         /* Grid Overlay */
@@ -255,7 +253,7 @@
             font-weight: 700;
             letter-spacing: 2px;
             z-index: 2; position: relative;
-            margin-right: 2rem; /* Buffer for right scroll */
+            margin-right: 2rem;
         }
 
         .hl-divisor { color: var(--color-divisor); }
@@ -291,7 +289,7 @@
         .content-area li { margin-bottom: 0.8rem; color: var(--text-main); line-height: 1.6; }
         .content-area strong { color: var(--calc-blue); font-weight: 700; }
 
-        /* 8. OVERLAYS & FOOTER */
+        /* 8. FOOTER & OVERLAYS */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
         .overlay.active { opacity: 1; visibility: visible; }
         .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
@@ -330,7 +328,7 @@
     <div id="searchOverlay" class="overlay" aria-hidden="true">
         <div class="search-bar-container">
             <label for="globalSearchInput" class="sr-only" style="display:none;">Search Tools</label>
-            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. Asphalt, CGPA)..." autocomplete="off">
+            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools..." autocomplete="off">
             <button id="closeSearch" class="close-btn" aria-label="Close Search">&times;</button>
         </div>
         <div id="searchResults" class="search-results-container"></div>
@@ -358,6 +356,7 @@
     </header>
 
     <main class="container">
+        
         <div class="content-limiter">
             
             <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -366,7 +365,7 @@
 
             <div style="margin-bottom: 2rem;">
                 <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals. Shows every step clearly.</p>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals. Shows every step.</p>
             </div>
 
             <div class="calculator-card">
@@ -495,6 +494,13 @@
                     <li><strong>Bring Down:</strong> Bring down the 5 next to the 2. The new number is <strong>25</strong>.</li>
                     <li><strong>Repeat:</strong> 5 goes into 25 exactly <strong>5 times</strong>. Write "5" on top. The final answer is 35.</li>
                 </ul>
+                
+                <h2>Frequently Asked Questions</h2>
+                <h3>What is a remainder?</h3>
+                <p>A remainder is the amount "left over" after division. For example, if you have 7 apples and share them between 2 people, each gets 3 apples, and 1 apple is left over. The answer is 3 R 1.</p>
+                
+                <h3>Can I divide by zero?</h3>
+                <p>No. Division by zero is undefined in mathematics. If you try entering "0" in the divisor field, the calculator will alert you that this operation is impossible.</p>
             </article>
 
         </div>

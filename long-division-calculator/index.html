@@ -1,1 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Division Calculator - Step-by-Step | LoveU Calc</title>
+    <meta name="description" content="Solve long division problems instantly. Shows complete step-by-step work, quotient, remainder, and supports multiple notation styles.">
+    <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+    <style>
+        /* 1. LOVEU DESIGN VARIABLES */
+        :root {
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+            
+            --love-pink: #db2777;
+            --calc-blue: #2563eb;
+            --success-green: #059669; 
+            --gradient-brand: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
+            
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* VISUALIZATION COLORS (Mapped to Theme) */
+            --color-divisor: #0d9488; /* Teal */
+            --color-quotient: #7c3aed; /* Purple */
+            --color-sub: #dc2626; /* Red */
+            --bg-dyscalculia: #FFFDD0; /* Cream */
+        }
+
+        /* 2. RESET & BASE */
+        * { box-sizing: border-box; }
+        
+        body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6;
+            display: flex; flex-direction: column; min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main { flex: 1; width: 100%; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--calc-blue); outline-offset: 2px;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+        @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
+
+        /* 3. HEADER */
+        header { 
+            padding: 1rem 0; position: sticky; top: 0; z-index: 50;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem;
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 1.2rem; }
+        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 48px; height: 48px; }
+        .burger-icon { width: 22px; height: 2.5px; background: var(--text-main); position: relative; border-radius: 2px; }
+        .burger-icon::before, .burger-icon::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px; }
+        .burger-icon::before { top: -7px; } .burger-icon::after { top: 7px; }
+        .search-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; }
+        .logo-wrapper { display: flex; align-items: baseline; gap: 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); }
+        .logo-love { color: var(--love-pink); } .logo-calc { color: var(--calc-blue); }
+        .logo-u-svg { width: 22px; height: 22px; display: block; margin-left: 4px; margin-right: 2px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
+
+        /* 4. CONTENT LIMITER */
+        .content-limiter { max-width: 800px; margin: 0 auto; }
+
+        /* 5. CALCULATOR CARD */
+        .calculator-card {
+            background: var(--surface); padding: 2rem;
+            border-radius: var(--radius-lg); border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm); margin-bottom: 3rem;
+        }
+
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
+
+        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-main); }
+        
+        .input-group { 
+            display: flex; width: 100%; border-radius: var(--radius-md); overflow: hidden; 
+            border: 1px solid var(--border); transition: var(--transition); 
+        }
+        .input-group:focus-within { border-color: var(--calc-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        .input-group input { 
+            flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; 
+            color: var(--text-main); min-height: 48px; background: #fff;
+        }
+        
+        .full-select { 
+            width: 100%; padding: 12px 16px; border-radius: var(--radius-md); 
+            border: 1px solid var(--border); font-size: 1rem; color: var(--text-main); 
+            background: #fff; appearance: none; min-height: 48px;
+        }
+
+        /* 6. OPTIONS BAR (Radio & Checks) */
+        .options-bar {
+            background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
+            border: 1px solid var(--border); margin-bottom: 1.5rem;
+        }
+        
+        .toggle-group { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 1rem; }
+        .toggle-group:last-child { margin-bottom: 0; padding-top: 1rem; border-top: 1px dashed var(--border); }
+
+        .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
+        .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
+
+        /* 7. BUTTONS */
+        .btn-calc { 
+            width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
+            padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; 
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); min-height: 54px; margin-bottom: 1rem;
+        }
+        .btn-calc:hover { transform: translateY(-2px); }
+
+        .btn-secondary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .btn-worksheet {
+            background: #fff; border: 2px dashed var(--calc-blue); color: var(--calc-blue);
+            padding: 12px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer;
+            width: 100%; transition: background 0.2s;
+        }
+        .btn-worksheet:hover { background: #eff6ff; }
+        
+        .btn-reset { 
+            background: transparent; border: 1px solid var(--border); color: var(--text-muted); 
+            padding: 12px; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; width: 100%; 
+        }
+        .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
+
+        /* 8. SOLVER CONTAINER */
+        .solver-container {
+            display: none; /* Hidden by default */
+            margin-top: 2rem;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Math Board Wrapper */
+        .math-board-wrapper {
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            overflow-x: auto; 
+            text-align: left;
+            position: relative;
+            min-height: 150px;
+            display: flex; justify-content: center;
+        }
+
+        /* The Math Text */
+        .math-display-pre {
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: 1.4rem; 
+            line-height: 1.4;
+            white-space: pre; 
+            color: var(--text-main);
+            font-weight: 700;
+            letter-spacing: 2px;
+            z-index: 2; position: relative;
+        }
+
+        /* Color Highlights */
+        .hl-divisor { color: var(--color-divisor); }
+        .hl-quotient { color: var(--color-quotient); }
+        .hl-sub { color: var(--color-sub); }
+
+        /* Explanation Box */
+        .step-explanation-box {
+            background: #eff6ff; border-left: 4px solid var(--calc-blue);
+            padding: 1rem; margin-top: 1.5rem; border-radius: 8px;
+            color: var(--text-main); font-size: 1rem; line-height: 1.5;
+        }
+
+        /* Nav Controls */
+        .nav-controls { display: flex; gap: 10px; margin-top: 1.5rem; }
+        .btn-nav {
+            flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
+            background: #fff; font-weight: 600; cursor: pointer; color: var(--text-main);
+        }
+        .btn-nav:hover:not(:disabled) { background: #f1f5f9; border-color: var(--calc-blue); }
+        .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn-nav.primary { background: var(--calc-blue); color: white; border: none; }
+        .btn-nav.primary:hover:not(:disabled) { background: #1d4ed8; }
+
+        /* Dyscalculia Mode */
+        .solver-container.dyscalculia-active .math-board-wrapper {
+            background-color: var(--bg-dyscalculia) !important;
+            border: 2px solid #4f46e5;
+        }
+        .solver-container.dyscalculia-active .math-display-pre {
+            font-size: 1.6rem; letter-spacing: 4px; color: #000 !important;
+        }
+        .grid-overlay {
+            display: none; position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; opacity: 0.1; 
+            background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .dyscalculia-active .grid-overlay { display: block; }
+
+        /* Signature */
+        .tool-signature { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .sig-love { color: var(--love-pink); font-weight: 700; }
+        .sig-logic { color: var(--calc-blue); font-weight: 700; }
+
+        /* Overlays & Footer (Standard) */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
+        .overlay.active .menu-drawer { transform: translateX(0); }
+        .search-bar-container { position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; }
+        .overlay.active .search-bar-container { transform: translateY(0); }
+        .drawer-header { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; }
+        .close-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 10px; }
+        .nav-links a { display: block; padding: 15px 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
+        .search-input { width: 100%; padding: 12px 0; font-size: 1.2rem; border: none; border-bottom: 2px solid var(--border); outline: none; color: var(--text-main); }
+        .search-results-container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; background: var(--surface); }
+        footer { border-top: 1px solid var(--border); padding: 4rem 0; background: var(--surface); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; }
+        .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
+    </style>
+</head>
+<body>
+
+    <div id="menuOverlay" class="overlay" aria-hidden="true"><div class="menu-drawer"><div class="drawer-header"><span style="font-weight:800; font-size:1.4rem;">Menu</span><button id="closeMenu" class="close-btn">&times;</button></div><nav class="nav-links"><a href="/">Home</a><a href="/categories/construction-materials">Construction</a><a href="/categories/education-academics">Education</a><a href="/categories/salary-finance">Finance</a><a href="/categories/general-lifestyle">Lifestyle</a><a href="/contact">Contact Us</a></nav></div></div>
+    <div id="searchOverlay" class="overlay" aria-hidden="true"><div class="search-bar-container"><input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools..." autocomplete="off"><button id="closeSearch" class="close-btn">&times;</button></div><div id="searchResults" class="search-results-container"></div></div>
+
+    <header>
+        <div class="container header-inner">
+            <div class="header-left">
+                <button id="menuBtn" class="icon-btn" aria-label="Menu"><div class="burger-icon"></div></button>
+                <a href="/" class="logo-wrapper">
+                    <span class="logo-love">Love</span>
+                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777" /><stop offset="100%" style="stop-color:#2563eb" /></linearGradient></defs>
+                        <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
+                    </svg>
+                    <span class="logo-calc">Calc.</span>
+                </a>
+            </div>
+            <button id="searchBtn" class="icon-btn search-icon" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content-limiter">
+            <nav class="breadcrumbs">
+                <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
+            </nav>
+
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals.</p>
+            </div>
+
+            <div class="calculator-card">
+                <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
+                    
+                    <div class="input-grid">
+                        <div>
+                            <label for="dividend">Dividend</label>
+                            <div class="input-group">
+                                <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="divisor">Divisor</label>
+                            <div class="input-group">
+                                <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options-bar">
+                        <div class="toggle-group">
+                            <label class="toggle-label">
+                                <input type="radio" name="mode" value="remainder" checked> Remainder
+                            </label>
+                            <label class="toggle-label">
+                                <input type="radio" name="mode" value="decimal"> Decimal
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <label style="width:100%">
+                                <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
+                                <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
+                                    <option value="us">US/UK (Bracket)</option>
+                                    <option value="eu">Europe (Galley)</option>
+                                    <option value="ger">Germany (Colon)</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle-label" title="High contrast, readable font, grid lines">
+                                <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
+                                <span>Access Mode (Dyscalculia)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-calc">Solve Step-by-Step</button>
+                    
+                    <div class="btn-secondary-grid">
+                        <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
+                        <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
+                    </div>
+
+                </form>
+
+                <div id="solverArea" class="solver-container">
+                    <div class="grid-overlay"></div>
+                    <div class="math-board-wrapper">
+                        <div id="mathBoard" class="math-display-pre"></div>
+                    </div>
+
+                    <div class="step-explanation-box">
+                        <span id="explanationText">Click "Next" to start.</span>
+                    </div>
+
+                    <div class="nav-controls">
+                        <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
+                        <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
+                        <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
+                    </div>
+                </div>
+
+                <div class="tool-signature">
+                    Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
+                </div>
+            </div>
+
+            <article class="content-area">
+                <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
+                <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
+            </article>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/disclaimer">Disclaimer</a>
+            </div>
+            <p>&copy; 2026 LoveU Calc. Use for reference only.</p>
+        </div>
+    </footer>
+
+    <script src="/scripts.js" defer></script>
+    
+    <script src="./tool.js" defer></script>
+
+</body>
+</html>

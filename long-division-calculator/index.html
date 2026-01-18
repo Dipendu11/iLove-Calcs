@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Long Division Calculator - Step-by-Step with Remainders | LoveU Calc</title>
-    <meta name="description" content="Free step-by-step long division calculator. Solves division problems with remainders or decimals. Includes visual work, notation options, and easy-to-follow instructions.">
+    <title>Long Division Calculator - Step-by-Step Solver with Remainders</title>
+    <meta name="description" content="Free step-by-step long division calculator. Solves division problems with remainders or decimals. Includes visual work, notation options, and PDF worksheets.">
     <meta name="keywords" content="long division calculator, division with remainders, step by step division, math solver, long division worksheets, DMSB method">
     <meta name="author" content="LoveU Calc">
     <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
@@ -23,9 +23,9 @@
           "@type": "WebApplication",
           "name": "Long Division Calculator",
           "url": "https://loveucalc.com/long-division-calculator/",
-          "description": "A comprehensive long division calculator that provides step-by-step solutions for division problems, supporting both remainder and decimal modes.",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "All",
+          "description": "A comprehensive long division calculator that provides step-by-step solutions for division problems, supporting both remainder and decimal modes.",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
@@ -37,484 +37,335 @@
             { "@type": "HowToStep", "name": "Subtract", "text": "Subtract the product from the dividend digits to find the remainder." },
             { "@type": "HowToStep", "name": "Bring Down", "text": "Bring down the next digit of the dividend and repeat the cycle." }
           ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "What is a remainder in division?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A remainder is the amount 'left over' after performing the division of two integers. For example, 7 divided by 2 is 3 with a remainder of 1."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I divide by zero?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, division by zero is undefined in mathematics. This calculator will alert you if you attempt to use 0 as a divisor."
+            }
+          }]
         }
       ]
     }
     </script>
 
     <style>
-        /* 1. LOVEU DESIGN VARIABLES */
+        /* --- 1. GLOBAL STYLES (Optimized) --- */
         :root {
-            --bg-body: #f8fafc;
-            --surface: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border: #cbd5e1;
-            
-            --love-pink: #db2777;
-            --calc-blue: #2563eb;
-            --success-green: #059669; 
-            --gradient-brand: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
-            
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-            /* VISUALIZATION COLORS */
-            --color-divisor: #0d9488;
-            --color-quotient: #7c3aed;
-            --color-sub: #dc2626;
-            --bg-dyscalculia: #FFFDD0;
+            --bg: #f8fafc; --surf: #ffffff;
+            --txt: #0f172a; --mut: #475569; --bord: #cbd5e1;
+            --pk: #db2777; --bl: #2563eb; --grn: #059669;
+            --grad: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
+            --rad: 12px; --shad: 0 1px 3px rgba(0,0,0,0.05);
+            /* Tool Colors */
+            --c-div: #0d9488; --c-quo: #7c3aed; --c-sub: #dc2626; --bg-dys: #FFFDD0;
         }
 
-        /* 2. RESET & BASE */
         * { box-sizing: border-box; }
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
         
-        body { 
-            margin: 0; 
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg-body); 
-            color: var(--text-main); 
-            line-height: 1.6;
-            display: flex; flex-direction: column; min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        main { flex: 1; width: 100%; }
-        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-            outline: 2px solid var(--calc-blue); outline-offset: 2px;
-        }
-        
-        /* 3. LAYOUT */
-        /* Outer Container: Matches Homepage EXACTLY (1000px) */
+        /* Layout */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
-        
-        /* Inner Limiter: Keeps the Calculator & Text readable (800px) */
-        .content-limiter { max-width: 800px; margin: 0 auto; }
-
+        .limiter { max-width: 800px; margin: 0 auto; }
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
-
-        /* 4. HEADER */
-        header { 
-            padding: 1rem 0; position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem;
-        }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; }
-        .header-left { display: flex; align-items: center; gap: 1.2rem; }
-
-        /* Icon Button (44px to match Homepage) */
-        .icon-btn {
-            background: transparent; border: none; cursor: pointer; padding: 8px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; width: 44px; height: 44px;
-            transition: var(--transition);
-        }
+        
+        /* Header */
+        header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .head-in { display: flex; justify-content: space-between; align-items: center; }
+        .head-l { display: flex; align-items: center; gap: 1.2rem; }
+        
+        /* Buttons & Icons */
+        .icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .icon-btn:hover { background: rgba(0,0,0,0.04); }
+        .ico-burger { width: 22px; height: 2.5px; background: var(--txt); position: relative; border-radius: 2px; }
+        .ico-burger::before, .ico-burger::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--txt); border-radius: 2px; }
+        .ico-burger::before { top: -7px; } .ico-burger::after { top: 7px; }
+        .ico-svg { width: 24px; height: 24px; fill: none; stroke: var(--txt); stroke-width: 2.5; stroke-linecap: round; }
 
-        .burger-icon { width: 22px; height: 2.5px; background: var(--text-main); position: relative; border-radius: 2px; }
-        .burger-icon::before, .burger-icon::after {
-            content: ''; position: absolute; left: 0;
-            width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px;
-        }
-        .burger-icon::before { top: -7px; } .burger-icon::after { top: 7px; }
-        .search-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; }
+        /* Branding */
+        .logo { display: flex; align-items: baseline; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--txt); }
+        .l-pk { color: var(--pk); } .l-bl { color: var(--bl); }
+        .l-svg { width: 22px; height: 22px; margin: 0 2px 0 4px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-        /* Logo */
-        .logo-wrapper {
-            display: flex; align-items: baseline; gap: 0; 
-            font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
-            color: var(--text-main);
-        }
-        .logo-love { color: var(--love-pink); }
-        .logo-calc { color: var(--calc-blue); }
-        .logo-u-svg {
-            width: 22px; height: 22px; display: block;
-            margin-left: 4px; margin-right: 2px;
-            transform: rotate(-15deg); transform-origin: bottom center;
-            position: relative; top: 2px;
-        }
+        /* Footer */
+        footer { border-top: 1px solid var(--bord); padding: 4rem 0; background: var(--surf); text-align: center; color: var(--mut); font-size: 0.9rem; margin-top: auto; }
+        .foot-lnk a { margin: 0 15px; font-weight: 600; color: var(--txt); }
 
-        /* 5. CALCULATOR STYLES */
-        .calculator-card {
-            background: var(--surface); padding: 2rem;
-            border-radius: var(--radius-lg); border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm); margin-bottom: 3rem;
-        }
-
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-        @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
-
-        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-main); }
+        /* --- 2. TOOL STYLES --- */
+        .calc-card { background: var(--surf); padding: 2rem; border-radius: 16px; border: 1px solid var(--bord); box-shadow: var(--shad); margin-bottom: 3rem; }
         
-        .input-group { 
-            display: flex; width: 100%; border-radius: var(--radius-md); overflow: hidden; 
-            border: 1px solid var(--border); transition: var(--transition); 
-        }
-        .input-group:focus-within { border-color: var(--calc-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        /* Inputs */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
         
-        .input-group input { 
-            flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; 
-            color: var(--text-main); min-height: 48px; background: #fff;
-        }
-        
-        .full-select { 
-            width: 100%; padding: 12px 16px; border-radius: var(--radius-md); 
-            border: 1px solid var(--border); font-size: 1rem; color: var(--text-main); 
-            background: #fff; appearance: none; min-height: 48px;
-        }
+        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .inp-grp { display: flex; width: 100%; border-radius: var(--rad); overflow: hidden; border: 1px solid var(--bord); transition: 0.2s; }
+        .inp-grp:focus-within { border-color: var(--bl); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .inp-grp input, .full-sel { flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; color: var(--txt); min-height: 48px; background: #fff; }
+        .full-sel { width: 100%; border-radius: var(--rad); border: 1px solid var(--bord); appearance: none; }
 
-        .options-bar {
-            background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
-            border: 1px solid var(--border); margin-bottom: 1.5rem;
-        }
-        
-        .toggle-group { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 1rem; }
-        .toggle-group:last-child { margin-bottom: 0; padding-top: 1rem; border-top: 1px dashed var(--border); }
+        /* Options */
+        .opts-bar { background: var(--bg); padding: 1.5rem; border-radius: var(--rad); border: 1px solid var(--bord); margin-bottom: 1.5rem; }
+        .togs { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 1rem; }
+        .togs:last-child { margin: 0; padding-top: 1rem; border-top: 1px dashed var(--bord); }
+        .tog-lbl { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; }
+        .tog-lbl input { width: 20px; height: 20px; accent-color: var(--bl); }
 
-        .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
-        .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
+        /* Actions */
+        .btn-act { width: 100%; background: var(--grad); color: #fff; border: none; padding: 16px; font-weight: 700; border-radius: var(--rad); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; min-height: 54px; margin-bottom: 1rem; }
+        .btn-act:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
+        .btn-sec { background: #fff; border: 2px dashed var(--bl); color: var(--bl); padding: 12px; border-radius: var(--rad); font-weight: 700; cursor: pointer; width: 100%; }
+        .btn-res { background: transparent; border: 1px solid var(--bord); color: var(--mut); padding: 12px; border-radius: var(--rad); font-weight: 600; cursor: pointer; width: 100%; }
+        .btn-res:hover { border-color: #ef4444; color: #ef4444; }
 
-        .btn-calc { 
-            width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
-            padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; 
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); min-height: 54px; margin-bottom: 1rem;
-        }
-        .btn-calc:hover { transform: translateY(-2px); }
-
-        .btn-secondary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .btn-worksheet {
-            background: #fff; border: 2px dashed var(--calc-blue); color: var(--calc-blue);
-            padding: 12px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer;
-            width: 100%; transition: background 0.2s;
-        }
-        .btn-worksheet:hover { background: #eff6ff; }
-        
-        .btn-reset { 
-            background: transparent; border: 1px solid var(--border); color: var(--text-muted); 
-            padding: 12px; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; width: 100%; 
-        }
-        .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
-
-        /* 6. SOLVER AREA */
-        .solver-container {
-            display: none; 
-            margin-top: 2rem;
-            animation: slideUp 0.3s ease-out;
-        }
+        /* Solver */
+        .solver { display: none; margin-top: 2rem; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .board-wrap { background: #fff; padding: 2rem; border-radius: var(--rad); border: 1px solid var(--bord); overflow-x: auto; position: relative; min-height: 150px; display: flex; justify-content: flex-start; }
+        
+        .math-pre { font-family: 'Courier New', monospace; font-size: 1.4rem; line-height: 1.4; white-space: pre; font-weight: 700; letter-spacing: 2px; z-index: 2; position: relative; margin-right: 2rem; }
+        .hl-d { color: var(--c-div); } .hl-q { color: var(--c-quo); } .hl-s { color: var(--c-sub); }
+        
+        .grid-ov { display: none; position: absolute; inset: 0; pointer-events: none; opacity: 0.15; z-index: 1; background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 20px 20px; }
+        .dys-mode .board-wrap { background-color: var(--bg-dys) !important; border: 2px solid var(--bl); }
+        .dys-mode .math-pre { font-size: 1.6rem; letter-spacing: 4px; color: #000 !important; }
+        .dys-mode .grid-ov { display: block; }
 
-        .math-board-wrapper {
-            background: #fff; 
-            padding: 2rem; 
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            overflow-x: auto; 
-            text-align: left;
-            position: relative;
-            min-height: 150px;
-            display: flex; 
-            justify-content: flex-start; /* Corrects scrolling */
-        }
+        .expl-box { background: #eff6ff; border-left: 4px solid var(--bl); padding: 1rem; margin-top: 1.5rem; border-radius: 8px; }
+        .navs { display: flex; gap: 10px; margin-top: 1.5rem; }
+        .btn-nav { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--bord); background: #fff; font-weight: 600; cursor: pointer; min-height: 48px; }
+        .btn-nav:disabled { opacity: 0.5; }
+        .btn-nav.pri { background: var(--bl); color: white; border: none; }
 
-        /* Grid Overlay */
-        .grid-overlay {
-            display: none; 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            pointer-events: none; 
-            opacity: 0.15; 
-            z-index: 1;
-            background-image: 
-                linear-gradient(#000 1px, transparent 1px), 
-                linear-gradient(90deg, #000 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+        .sig { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--bord); font-size: 0.9rem; color: var(--mut); font-weight: 500; }
+        
+        /* Content & Overlays */
+        .content { margin-top: 4rem; padding-bottom: 2rem; }
+        .content h2 { font-size: 1.5rem; font-weight: 800; margin: 2.5rem 0 1rem; letter-spacing: -0.5px; }
+        .content h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; }
+        .content p { margin-bottom: 1.2rem; }
+        .content ul, .content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--bl); font-weight: 700; }
+        /* FIX: White-space: pre forces perfect character alignment */
+        .example-box { white-space: pre; overflow-x: auto; font-family: 'Courier New', monospace; background: #f1f5f9; padding: 1.5rem; border-radius: 8px; width: fit-content; margin-bottom: 1.5rem; border: 1px solid var(--bord); font-weight: 700; color: var(--txt); }
 
-        .solver-container.dyscalculia-active .math-board-wrapper {
-            background-color: var(--bg-dyscalculia) !important;
-            border: 2px solid #4f46e5;
-        }
-        .solver-container.dyscalculia-active .math-display-pre {
-            font-size: 1.6rem; letter-spacing: 4px; color: #000 !important;
-        }
-        .solver-container.dyscalculia-active .grid-overlay { display: block; }
-
-        .math-display-pre {
-            font-family: 'Courier New', Courier, monospace; 
-            font-size: 1.4rem; 
-            line-height: 1.4;
-            white-space: pre; 
-            color: var(--text-main);
-            font-weight: 700;
-            letter-spacing: 2px;
-            z-index: 2; position: relative;
-            margin-right: 2rem;
-        }
-
-        .hl-divisor { color: var(--color-divisor); }
-        .hl-quotient { color: var(--color-quotient); }
-        .hl-sub { color: var(--color-sub); }
-
-        .step-explanation-box {
-            background: #eff6ff; border-left: 4px solid var(--calc-blue);
-            padding: 1rem; margin-top: 1.5rem; border-radius: 8px;
-            color: var(--text-main); font-size: 1rem; line-height: 1.5;
-        }
-
-        .nav-controls { display: flex; gap: 10px; margin-top: 1.5rem; }
-        .btn-nav {
-            flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
-            background: #fff; font-weight: 600; cursor: pointer; color: var(--text-main);
-        }
-        .btn-nav:hover:not(:disabled) { background: #f1f5f9; border-color: var(--calc-blue); }
-        .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-nav.primary { background: var(--calc-blue); color: white; border: none; }
-        .btn-nav.primary:hover:not(:disabled) { background: #1d4ed8; }
-
-        .tool-signature { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-        .sig-love { color: var(--love-pink); font-weight: 700; }
-        .sig-logic { color: var(--calc-blue); font-weight: 700; }
-
-        /* 7. CONTENT AREA STYLES (SEO Optimized) */
-        .content-area { margin-top: 4rem; padding-bottom: 2rem; }
-        .content-area h2 { font-size: 1.6rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--text-main); letter-spacing: -0.5px; }
-        .content-area h3 { font-size: 1.3rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem; color: var(--text-main); }
-        .content-area p { margin-bottom: 1.2rem; font-size: 1.05rem; color: var(--text-main); line-height: 1.7; }
-        .content-area ul, .content-area ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
-        .content-area li { margin-bottom: 0.8rem; color: var(--text-main); line-height: 1.6; }
-        .content-area strong { color: var(--calc-blue); font-weight: 700; }
-
-        /* 8. FOOTER & OVERLAYS */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
-        .overlay.active { opacity: 1; visibility: visible; }
-        .menu-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 300px; background: var(--surface); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s; }
-        .overlay.active .menu-drawer { transform: translateX(0); }
-        .search-bar-container { position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; }
-        .overlay.active .search-bar-container { transform: translateY(0); }
-        .drawer-header { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; }
-        .close-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 10px; }
-        .nav-links a { display: block; padding: 15px 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
-        .search-input { width: 100%; padding: 12px 0; font-size: 1.2rem; border: none; border-bottom: 2px solid var(--border); outline: none; color: var(--text-main); }
-        .search-results-container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; background: var(--surface); }
-        footer { border-top: 1px solid var(--border); padding: 4rem 0; background: var(--surface); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; }
-        .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
-
+        .ov-lay { position: fixed; inset: 0; background: rgba(15,23,42,0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.2s; }
+        .ov-lay.active { opacity: 1; visibility: visible; }
+        .drawer { position: fixed; inset: 0 auto 0 0; width: 300px; background: var(--surf); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: 0.3s; }
+        .ov-lay.active .drawer { transform: translateX(0); }
+        .search-bar { position: fixed; inset: 0 0 auto 0; background: var(--surf); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: 0.3s; border-bottom: 1px solid var(--bord); display: flex; gap: 1rem; }
+        .ov-lay.active .search-bar { transform: translateY(0); }
+        .cls-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--mut); }
+        .nav-lnk a { display: block; padding: 12px 0; border-bottom: 1px solid var(--bord); font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <div id="menuOverlay" class="overlay" aria-hidden="true">
-        <div class="menu-drawer">
-            <div class="drawer-header">
+    <div id="menuOverlay" class="ov-lay" aria-hidden="true">
+        <div class="drawer">
+            <div style="display:flex; justify-content:space-between; margin-bottom:2rem;">
                 <span style="font-weight:800; font-size:1.4rem;">Menu</span>
-                <button id="closeMenu" class="close-btn" aria-label="Close Menu">&times;</button>
+                <button id="closeMenu" class="cls-btn" aria-label="Close">&times;</button>
             </div>
-            <nav class="nav-links">
+            <nav class="nav-lnk">
                 <a href="/">Home</a>
                 <a href="/categories/construction-materials">Construction</a>
                 <a href="/categories/education-academics">Education</a>
                 <a href="/categories/salary-finance">Finance</a>
                 <a href="/categories/general-lifestyle">Lifestyle</a>
-                <a href="/contact">Contact Us</a>
+                <a href="/contact">Contact</a>
             </nav>
         </div>
     </div>
 
-    <div id="searchOverlay" class="overlay" aria-hidden="true">
-        <div class="search-bar-container">
-            <label for="globalSearchInput" class="sr-only" style="display:none;">Search Tools</label>
-            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools..." autocomplete="off">
-            <button id="closeSearch" class="close-btn" aria-label="Close Search">&times;</button>
+    <div id="searchOverlay" class="ov-lay" aria-hidden="true">
+        <div class="search-bar">
+            <input type="text" id="globalSearchInput" class="full-sel" placeholder="Search tools..." autocomplete="off">
+            <button id="closeSearch" class="cls-btn" aria-label="Close">&times;</button>
         </div>
-        <div id="searchResults" class="search-results-container"></div>
+        <div id="searchResults" class="container"></div>
     </div>
 
     <header>
-        <div class="container header-inner">
-            <div class="header-left">
-                <button id="menuBtn" class="icon-btn" aria-label="Open Menu">
-                    <div class="burger-icon"></div>
-                </button>
-                <a href="/" class="logo-wrapper" aria-label="LoveU Calc Home">
-                    <span class="logo-love">Love</span>
-                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <defs><linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777" /><stop offset="100%" style="stop-color:#2563eb" /></linearGradient></defs>
-                        <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
+        <div class="container head-in">
+            <div class="head-l">
+                <button id="menuBtn" class="icon-btn" aria-label="Menu"><div class="ico-burger"></div></button>
+                <a href="/" class="logo">
+                    <span class="l-pk">Love</span>
+                    <svg class="l-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="uG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777"/><stop offset="100%" style="stop-color:#2563eb"/></linearGradient></defs>
+                        <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uG)" stroke-width="28" stroke-linecap="round"/>
                     </svg>
-                    <span class="logo-calc">Calc.</span>
+                    <span class="l-bl">Calc.</span>
                 </a>
             </div>
-            <button id="searchBtn" class="icon-btn search-icon" aria-label="Open Search">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
+            <button id="searchBtn" class="icon-btn" aria-label="Search"><svg class="ico-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
         </div>
     </header>
 
     <main class="container">
-        
-        <div class="content-limiter">
-            
-            <nav class="breadcrumbs" aria-label="Breadcrumb">
-                <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
+        <div class="limiter">
+            <nav style="margin-bottom:1.5rem; color:var(--mut); font-size:0.9rem;">
+                <a href="/">Home</a> / <a href="/categories/education-academics">Education</a>
             </nav>
 
             <div style="margin-bottom: 2rem;">
-                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals. Shows every step.</p>
+                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px;">Long Division Calculator</h1>
+                <p style="color: var(--mut); font-size: 1.1rem;">Visual solver for long division with remainders or decimals. Shows every step.</p>
             </div>
 
-            <div class="calculator-card">
+            <div class="calc-card">
                 <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
-                    
-                    <div class="input-grid">
+                    <div class="grid-2">
                         <div>
-                            <label for="dividend">Dividend (Number to Divide)</label>
-                            <div class="input-group">
-                                <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
-                            </div>
+                            <label for="dividend">Dividend</label>
+                            <div class="inp-grp"><input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any"></div>
                         </div>
                         <div>
-                            <label for="divisor">Divisor (Number to Divide By)</label>
-                            <div class="input-group">
-                                <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
-                            </div>
+                            <label for="divisor">Divisor</label>
+                            <div class="inp-grp"><input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any"></div>
                         </div>
                     </div>
 
-                    <div class="options-bar">
-                        <div class="toggle-group">
-                            <label class="toggle-label">
-                                <input type="radio" name="mode" value="remainder" checked> Remainder Mode (R)
-                            </label>
-                            <label class="toggle-label">
-                                <input type="radio" name="mode" value="decimal"> Decimal Mode (.)
-                            </label>
+                    <div class="opts-bar">
+                        <div class="togs">
+                            <label class="tog-lbl"><input type="radio" name="mode" value="remainder" checked> Remainder Mode (R)</label>
+                            <label class="tog-lbl"><input type="radio" name="mode" value="decimal"> Decimal Mode (.)</label>
                         </div>
-                        
-                        <div class="toggle-group">
+                        <div class="togs">
                             <label style="width:100%">
                                 <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
-                                <select id="notationSelect" class="full-select" aria-label="Select Notation Style" onchange="if(steps.length>0) renderStep(currentStepIndex);">
+                                <select id="notationSelect" class="full-sel" onchange="if(steps.length>0) renderStep(currentStepIndex);">
                                     <option value="us">US/UK (Bracket Method)</option>
                                     <option value="eu">Europe (Galley Method)</option>
                                     <option value="ger">Germany (Colon Method)</option>
                                 </select>
                             </label>
                         </div>
-
-                        <div class="toggle-group">
-                            <label class="toggle-label" title="High contrast, readable font, grid lines">
-                                <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
-                                <span>Access Mode (Dyscalculia Support)</span>
-                            </label>
+                        <div class="togs">
+                            <label class="tog-lbl"><input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> Access Mode (Dyscalculia Support)</label>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-calc">Solve Step-by-Step</button>
+                    <button type="submit" class="btn-act">Solve Step-by-Step</button>
                     
-                    <div class="btn-secondary-grid">
-                        <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
-                        <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
+                    <div class="grid-2" style="margin-bottom:0;">
+                        <button type="button" class="btn-sec" onclick="generatePDF()">PDF Worksheet</button>
+                        <button type="button" class="btn-res" onclick="resetTool()">Reset</button>
                     </div>
-
                 </form>
 
-                <div id="solverArea" class="solver-container">
-                    <div class="math-board-wrapper">
-                        <div class="grid-overlay"></div>
-                        <div id="mathBoard" class="math-display-pre"></div>
+                <div id="solverArea" class="solver">
+                    <div class="board-wrap">
+                        <div class="grid-ov"></div>
+                        <div id="mathBoard" class="math-pre"></div>
                     </div>
-
-                    <div class="step-explanation-box">
-                        <span id="explanationText">Click "Next" to start.</span>
-                    </div>
-
-                    <div class="nav-controls">
+                    <div class="expl-box"><span id="explanationText">Click "Next" to start.</span></div>
+                    <div class="navs">
                         <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
-                        <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
+                        <button class="btn-nav pri" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
                         <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
                     </div>
                 </div>
 
-                <div class="tool-signature">
-                    Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
-                </div>
+                <div class="sig">Made with <span class="l-pk">Love</span> & <span class="l-bl">Logic</span>.</div>
             </div>
 
-            <article class="content-area">
+            <article class="content">
                 <h2>What is Long Division?</h2>
-                <p>Long division is a fundamental arithmetic algorithm used to divide large numbers (the <strong>dividend</strong>) by smaller numbers (the <strong>divisor</strong>). Unlike mental division, which breaks a number into equal parts instantly, long division breaks the problem down into a sequence of simple, repetitive steps.</p>
-                <p>This method is essential for students in <strong>3rd, 4th, and 5th grade</strong> as it teaches place value, logical sequencing, and arithmetic patience. Our calculator serves as a private tutor, visualizing each step so you can check your homework or learn the method from scratch.</p>
+                <p>Long division is a standard arithmetic algorithm used for dividing multi-digit numbers (the <strong>dividend</strong>) by another number (the <strong>divisor</strong>). Unlike simple division, which can often be done mentally, long division breaks a complex problem down into a sequence of smaller, manageable steps. This step-by-step process is crucial for ensuring accuracy, especially when dealing with large numbers or finding remainders.</p>
+                <p>This calculator acts as a digital tutor. Instead of just giving you the answer (like a standard calculator), it visualizes the entire process, showing you exactly where each number comes from. It is an essential tool for students mastering arithmetic concepts in grades 3 through 6.</p>
 
                 <h2>Who Should Use This Tool?</h2>
+                <p>We designed the <strong>LoveU Calc Long Division Solver</strong> for specific user needs:</p>
                 <ul>
-                    <li><strong>Students:</strong> Stuck on homework? Use this tool to see exactly where you went wrong in your calculation. It shows the work, not just the answer.</li>
-                    <li><strong>Teachers:</strong> Need fresh practice problems? Use the <strong>"PDF Worksheet"</strong> generator to instantly create printable quizzes for your class.</li>
-                    <li><strong>Parents:</strong> Math methods have changed since you were in school. Use this tool to refresh your memory on the "old school" bracket method (or new European styles) to help your kids.</li>
-                    <li><strong>Users with Dyscalculia:</strong> We believe math is for everyone. Toggle our <strong>"Access Mode"</strong> for a high-contrast interface with grid lines that helps align numbers correctly.</li>
+                    <li><strong>Students:</strong> If you are stuck on a math problem, use this tool to "check your work." Seeing the steps unfold helps you identify exactly where you might have made a calculation error.</li>
+                    <li><strong>Teachers:</strong> Use our <strong>PDF Worksheet Generator</strong> feature. With one click, you can download a randomized set of practice problems for your class, saving you time on lesson planning.</li>
+                    <li><strong>Parents:</strong> Math methods have evolved. If you are struggling to help your child because the "new math" looks different, use this tool to bridge the gap. We support both modern and traditional notations.</li>
+                    <li><strong>Users with Dyscalculia:</strong> We believe tools should be accessible. Toggle the <strong>"Access Mode"</strong> to enable a high-contrast interface with grid lines, making it easier to track numbers visually without them "floating" around the page.</li>
                 </ul>
 
-                <h2>Features of LoveU Calc</h2>
+                <h2>Key Features</h2>
                 <ul>
-                    <li><strong>3 Notation Styles:</strong> Whether you are in the US, France, or Germany, we support your local division style (Bracket, Galley, or Colon).</li>
-                    <li><strong>Remainder & Decimal Modes:</strong> Choose between a simple remainder (e.g., 5 R 2) for elementary math or a precise decimal answer (e.g., 5.4) for advanced calculations.</li>
-                    <li><strong>Zero Lag:</strong> This tool runs 100% in your browser. No server waiting times, and total privacy for your data.</li>
+                    <li><strong>Multiple Notation Styles:</strong> Mathematics is universal, but symbols aren't. We support the standard US Bracket `)‾`, the European Galley `|`, and the German Colon `:`.</li>
+                    <li><strong>Remainder & Decimal Modes:</strong> Choose <strong>"Remainder Mode"</strong> for elementary school problems (e.g., 5 R 2) or <strong>"Decimal Mode"</strong> for precise, scientific answers (e.g., 5.4).</li>
+                    <li><strong>Zero Lag & Privacy:</strong> This tool runs entirely in your browser using JavaScript. No data is sent to a server, making it faster and more private than many competitors.</li>
                 </ul>
 
                 <h2>The Three Methods Explained</h2>
-                <h3>1. US/UK Method (Bracket)</h3>
-                <p>This is the standard notation used in North America and the UK. The divisor is placed to the left of a bracket `)`, and the dividend is placed inside (under the "roof"). The quotient (answer) is written on top.</p>
+                <h3>1. US/UK Method (The Bracket)</h3>
+                <p>This is the standard notation taught in North America and the United Kingdom. The divisor is placed to the left of a curved bracket, and the dividend goes inside (under the "roof"). The quotient (answer) is written on top of the line.</p>
                 
-                <h3>2. European Method (Galley)</h3>
-                <p>Common in France, Spain, Italy, and Latin America. The dividend and divisor are separated by a vertical line `|`. The quotient is written in the L-shaped nook on the right.</p>
+                <h3>2. European Method (The Galley)</h3>
+                <p>Common in France, Spain, Italy, and much of Latin America. The dividend and divisor are separated by a vertical line `|`. The quotient is written in an L-shaped nook on the right side. This method often helps students keep the answer separate from the working numbers.</p>
 
-                <h3>3. German Method (Colon)</h3>
-                <p>Common in Germany and Northern Europe. The problem is written as a linear equation (e.g., 1250 : 5 = 250). The subtraction work happens directly underneath the dividend.</p>
+                <h3>3. German Method (The Colon)</h3>
+                <p>Common in Germany and Northern Europe. The problem is written as a linear equation (e.g., 1250 : 5 = 250). The division work proceeds downwards, similar to the US method, but without the roof structure. The equals sign clearly separates the question from the answer.</p>
 
                 <h2>How to Perform Long Division (Step-by-Step)</h2>
-                <p>The easiest way to remember the long division process is the mnemonic <strong>"Dad, Mom, Sister, Brother"</strong> (DMSB):</p>
+                <p>The most popular way to remember the long division steps is the mnemonic <strong>"Dad, Mom, Sister, Brother"</strong> (DMSB), which stands for:</p>
                 <ol>
-                    <li><strong>D (Divide):</strong> Look at the first digit of the dividend. How many times does the divisor fit into it? Write that number on top.</li>
-                    <li><strong>M (Multiply):</strong> Multiply the number you just wrote on top by the divisor. Write the result underneath the dividend digit.</li>
-                    <li><strong>S (Subtract):</strong> Subtract that result from the dividend digit to find the difference.</li>
-                    <li><strong>B (Bring Down):</strong> Bring down the next digit of the dividend to the right of your subtraction result. Now, repeat the process with this new number!</li>
+                    <li><strong>D (Divide):</strong> Look at the first digit of the dividend. Determine how many times the divisor fits into it. Write that number on top (in the quotient area).</li>
+                    <li><strong>M (Multiply):</strong> Multiply the number you just wrote on top by the divisor. Write the result directly underneath the digit(s) you just divided.</li>
+                    <li><strong>S (Subtract):</strong> Subtract that result from the dividend digits to find the difference (remainder).</li>
+                    <li><strong>B (Bring Down):</strong> Bring down the next digit of the dividend to the right of your subtraction result. Now, you have a new target number to divide!</li>
                 </ol>
+                <p>Repeat this cycle until there are no more digits to bring down. If the final number is not zero and smaller than the divisor, that is your <strong>Remainder</strong>.</p>
 
                 <h3>Example: 175 ÷ 5</h3>
-                <p>Let's apply the steps:</p>
-                <ul>
-                    <li><strong>Divide:</strong> 5 does not go into 1. So, look at 17. 5 goes into 17 <strong>3 times</strong>. Write "3" on top.</li>
-                    <li><strong>Multiply:</strong> 3 × 5 = <strong>15</strong>. Write 15 under the 17.</li>
-                    <li><strong>Subtract:</strong> 17 - 15 = <strong>2</strong>.</li>
-                    <li><strong>Bring Down:</strong> Bring down the 5 next to the 2. The new number is <strong>25</strong>.</li>
-                    <li><strong>Repeat:</strong> 5 goes into 25 exactly <strong>5 times</strong>. Write "5" on top. The final answer is 35.</li>
-                </ul>
+                <p>Let's walk through dividing 175 by 5.</p>
                 
-                <h2>Frequently Asked Questions</h2>
+                <ol>
+                    <li><strong>Step 1 - Divide:</strong> 5 cannot fit into 1. So, we look at the first two digits: 17. 5 goes into 17 <strong>3 times</strong> (because 5 × 3 = 15). We write the '3' on top.</li>
+                    <li><strong>Step 2 - Multiply:</strong> Multiply the 3 by 5 to get <strong>15</strong>. Write '15' under the '17'.</li>
+                    <li><strong>Step 3 - Subtract:</strong> Draw a line and subtract: 17 - 15 = <strong>2</strong>.</li>
+                    <li><strong>Step 4 - Bring Down:</strong> Bring down the next digit (5) next to the 2. The new number is <strong>25</strong>.</li>
+                    <li><strong>Repeat:</strong> 5 goes into 25 exactly <strong>5 times</strong>. Write '5' on top. Multiply (5 × 5 = 25) and subtract (25 - 25 = 0). The remainder is 0.</li>
+                </ol>
+
+                <p><strong>The Final Result:</strong></p>
+                <div class="example-box">
+   035
+5)175
+  -15
+  ---
+   25
+  -25
+  ---
+    0
+                </div>
+
+                <h2>Frequently Asked Questions (FAQ)</h2>
                 <h3>What is a remainder?</h3>
-                <p>A remainder is the amount "left over" after division. For example, if you have 7 apples and share them between 2 people, each gets 3 apples, and 1 apple is left over. The answer is 3 R 1.</p>
+                <p>A remainder is the amount "left over" after performing integer division. For example, if you have 7 cookies and share them equally between 2 people, each person gets 3 cookies, and 1 cookie remains. In math terms: 7 ÷ 2 = 3 R 1.</p>
                 
                 <h3>Can I divide by zero?</h3>
-                <p>No. Division by zero is undefined in mathematics. If you try entering "0" in the divisor field, the calculator will alert you that this operation is impossible.</p>
+                <p>No. Division by zero is undefined in mathematics. If you attempt to enter "0" in the divisor field, this calculator will alert you that the operation is impossible. Splitting something into zero groups doesn't make logical sense!</p>
+                
+                <h3>Why does the calculator show decimals instead of a remainder?</h3>
+                <p>Check the "Mode" toggle at the top of the calculator. If you have selected <strong>"Decimal Mode"</strong>, the tool will continue dividing past the decimal point to give you a precise answer. Switch to <strong>"Remainder Mode"</strong> if you want the traditional whole number result.</p>
             </article>
-
         </div>
     </main>
 
-    <footer id="footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/privacy">Privacy</a>
-                <a href="/disclaimer">Disclaimer</a>
-            </div>
-            <p>&copy; 2026 LoveU Calc. Use for reference only.</p>
+    <footer>
+        <div class="container foot-lnk">
+            <a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a>
+            <p style="margin-top:1.5rem;">&copy; 2026 LoveU Calc. Use for reference.</p>
         </div>
     </footer>
 

@@ -134,7 +134,7 @@
         .solver { display: none; margin-top: 2rem; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* FIX: Fixed height limit + Auto Scrollbars */
+        /* FIX: No Vertical Limit, Only Horizontal Scroll */
         .board-wrap { 
             background: #fff; 
             padding: 2rem; 
@@ -144,8 +144,9 @@
             /* Sizing & Scroll */
             width: 100%;
             min-height: 150px; 
-            max-height: 50vh; /* Limits vertical growth (50% of screen) */
-            overflow: auto;   /* Scrollbars appear instantly on overflow */
+            /* NO max-height here so it grows down */
+            overflow-x: auto;   /* Force horizontal scroll for wide math */
+            overflow-y: hidden; /* No internal vertical scroll */
             
             /* Layout */
             display: flex; 
@@ -305,6 +306,9 @@
                 <h2>What is Long Division?</h2>
                 <p>Long division is a standard arithmetic algorithm used for dividing multi-digit numbers (the <strong>dividend</strong>) by another number (the <strong>divisor</strong>). Unlike simple division, which can often be done mentally, long division breaks a complex problem down into a sequence of smaller, manageable steps. This step-by-step process is crucial for ensuring accuracy, especially when dealing with large numbers or finding remainders.</p>
                 
+
+[Image of long division diagram]
+
                 <p>This calculator acts as a digital tutor. Instead of just giving you the answer (like a standard calculator), it visualizes the entire process, showing you exactly where each number comes from. It is an essential tool for students mastering arithmetic concepts in grades 3 through 6.</p>
 
                 <h2>Who Should Use This Tool?</h2>

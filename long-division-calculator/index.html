@@ -5,43 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <title>Long Division Calculator - Step-by-Step Solver with Remainders</title>
-    <meta name="description" content="Free step-by-step long division calculator. Solves division problems with remainders or decimals. Includes visual work, notation options, and PDF worksheets.">
-    <meta name="keywords" content="long division calculator, division with remainders, step by step division, math solver, long division worksheets, DMSB method">
+    <title>Long Division Calculator - Step-by-Step Solver | LoveU Calc</title>
+    <meta name="description" content="Mastering long division is mandatory. Use the LoveU Calc Long Division Calculator to solve step-by-step with work shown. Supports decimals, remainders, and Dyscalculia mode.">
+    <meta name="keywords" content="long division calculator, long division step by step calculator, long division calculator with work shown, long division calculator with decimals, dyscalculia support, DMSB method">
     <meta name="author" content="LoveU Calc">
     <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-<link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-
     
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://loveucalc.com/long-division-calculator/">
     <meta property="og:title" content="Long Division Calculator - Step-by-Step Solver">
-    <meta property="og:description" content="Master long division instantly. Get the quotient, remainder, and full work shown for any problem.">
+    <meta property="og:description" content="Watch the problem solve itself row-by-row. Features dyscalculia support, PDF worksheets, and step-by-step visuals.">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Organization",
-          "@id": "https://loveucalc.com/#organization",
-          "name": "LoveU Calc",
-          "url": "https://loveucalc.com/",
-          "logo": { "@type": "ImageObject", "url": "https://loveucalc.com/assets/logo.png", "width": 112, "height": 112 }
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://loveucalc.com/#website",
-          "url": "https://loveucalc.com/",
-          "name": "LoveU Calc",
-          "publisher": { "@id": "https://loveucalc.com/#organization" }
+          "@type": "WebApplication",
+          "name": "Long Division Calculator",
+          "url": "https://loveucalc.com/long-division-calculator/",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "description": "A comprehensive long division calculator with work shown. Supports step-by-step calculation, decimals, remainders, and generated PDF worksheets.",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "featureList": "Step-by-Step Calculation, Three Notation Styles, Decimal or Remainder Mode, Dyscalculia Support, Auto Mode, PDF Worksheets",
+          "author": { "@type": "Organization", "name": "LoveU Calc" }
         },
         {
           "@type": "BreadcrumbList",
-          "@id": "https://loveucalc.com/long-division-calculator/#breadcrumb",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://loveucalc.com/" },
             { "@type": "ListItem", "position": 2, "name": "Education", "item": "https://loveucalc.com/categories/education-academics" },
@@ -49,32 +45,33 @@
           ]
         },
         {
-          "@type": "WebApplication",
-          "@id": "https://loveucalc.com/long-division-calculator/#webapp",
-          "name": "Long Division Calculator",
-          "url": "https://loveucalc.com/long-division-calculator/",
-          "description": "A comprehensive long division calculator that provides step-by-step solutions with visual work shown.",
-          "applicationCategory": "EducationalApplication",
-          "operatingSystem": "All",
-          "featureList": "Step-by-step solution, Remainder mode, Decimal mode, Dyscalculia support, PDF Worksheet generation",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-          "author": { "@id": "https://loveucalc.com/#organization" }
-        },
-        {
           "@type": "HowTo",
-          "name": "How to Perform Long Division (DMSB Method)",
+          "name": "How to perform long division?",
           "step": [
-            { "@type": "HowToStep", "name": "Divide", "text": "Determine how many times the divisor fits into the first digit(s).", "position": 1 },
-            { "@type": "HowToStep", "name": "Multiply", "text": "Multiply that count by the divisor.", "position": 2 },
-            { "@type": "HowToStep", "name": "Subtract", "text": "Subtract the product from the dividend digits.", "position": 3 },
-            { "@type": "HowToStep", "name": "Bring Down", "text": "Bring down the next digit and repeat.", "position": 4 }
+            { "@type": "HowToStep", "name": "Divide", "text": "Determine how many times the divisor fits into the current digit." },
+            { "@type": "HowToStep", "name": "Multiply", "text": "Multiply that count by the divisor." },
+            { "@type": "HowToStep", "name": "Subtract", "text": "Subtract the product from the dividend digits to find the difference." },
+            { "@type": "HowToStep", "name": "Bring Down", "text": "Bring down the next digit to continue." }
           ]
         },
         {
           "@type": "FAQPage",
           "mainEntity": [
-            { "@type": "Question", "name": "What is a remainder?", "acceptedAnswer": { "@type": "Answer", "text": "The amount left over after division." } },
-            { "@type": "Question", "name": "Can I divide by zero?", "acceptedAnswer": { "@type": "Answer", "text": "No, it is undefined." } }
+            {
+              "@type": "Question",
+              "name": "Can this calculator solve for decimals?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Simply select 'Decimal Mode' at the top of the tool to calculate precise values past the decimal point." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does this tool solve polynomials?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No, this tool is designed for arithmetic long division (numbers). For algebraic equations, you would need a polynomial solver." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I print the solution?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes! Click the 'PDF Worksheet' button to generate a clean, printable version of the current problem and solution steps." }
+            }
           ]
         }
       ]
@@ -82,7 +79,6 @@
     </script>
 
     <style>
-        /* --- 1. GLOBAL VARIABLES --- */
         :root {
             --bg: #f8fafc; --surf: #ffffff;
             --txt: #0f172a; --mut: #475569; --bord: #cbd5e1;
@@ -90,7 +86,6 @@
             --grad: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
             --rad: 16px; --shad: 0 1px 3px rgba(0,0,0,0.05);
             --shad-h: 0 10px 15px -3px rgba(0,0,0,0.05);
-            /* Tool Colors */
             --c-div: #0d9488; --c-quo: #7c3aed; --c-sub: #dc2626; --bg-dys: #FFFDD0;
         }
 
@@ -98,12 +93,10 @@
         body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
         a { text-decoration: none; color: inherit; transition: 0.2s; }
         
-        /* Layout */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
         .limiter { max-width: 800px; margin: 0 auto; width: 100%; }
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
 
-        /* --- 2. HEADER & LOGO --- */
         header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
         .head-in { display: flex; justify-content: space-between; align-items: center; }
         .head-l { display: flex; align-items: center; gap: 1.2rem; }
@@ -115,12 +108,10 @@
         .ico-burger::before { top: -7px; } .ico-burger::after { top: 7px; }
         .ico-svg { width: 24px; height: 24px; fill: none; stroke: var(--txt); stroke-width: 2.5; stroke-linecap: round; }
 
-        /* Brand Logo */
         .logo { display: flex; align-items: baseline; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--txt); }
         .l-pk { color: var(--pk); } .l-bl { color: var(--bl); }
         .l-svg { width: 22px; height: 22px; margin: 0 2px 0 4px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-        /* --- 3. TOOL STYLES --- */
         .calc-card { background: var(--surf); padding: 2rem; border-radius: var(--rad); border: 1px solid var(--bord); box-shadow: var(--shad); margin-bottom: 3rem; }
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
@@ -133,21 +124,18 @@
         
         .full-sel { width: 100%; padding: 12px 16px; border-radius: var(--rad); border: 1px solid var(--bord); font-size: 1rem; background: #fff; min-height: 48px; appearance: none; }
 
-        /* Options */
         .opts-bar { background: var(--bg); padding: 1.5rem; border-radius: var(--rad); border: 1px solid var(--bord); margin-bottom: 1.5rem; }
         .togs { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 1rem; }
         .togs:last-child { margin: 0; padding-top: 1rem; border-top: 1px dashed var(--bord); }
         .tog-lbl { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; }
         .tog-lbl input { width: 20px; height: 20px; accent-color: var(--bl); }
 
-        /* Actions */
         .btn-act { width: 100%; background: var(--grad); color: #fff; border: none; padding: 16px; font-weight: 700; border-radius: var(--rad); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; min-height: 54px; margin-bottom: 1rem; }
         .btn-act:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
         .btn-sec { background: #fff; border: 2px dashed var(--bl); color: var(--bl); padding: 12px; border-radius: var(--rad); font-weight: 700; cursor: pointer; width: 100%; }
         .btn-res { background: transparent; border: 1px solid var(--bord); color: var(--mut); padding: 12px; border-radius: var(--rad); font-weight: 600; cursor: pointer; width: 100%; }
         .btn-res:hover { border-color: #ef4444; color: #ef4444; }
 
-        /* Solver Visuals */
         .solver { display: none; margin-top: 2rem; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -156,7 +144,6 @@
         .math-pre { font-family: 'Courier New', monospace; font-size: 1.4rem; line-height: 1.4; white-space: pre; font-weight: 700; letter-spacing: 2px; display: inline-block; min-width: 100%; }
         .hl-d { color: var(--c-div); } .hl-q { color: var(--c-quo); } .hl-s { color: var(--c-sub); }
         
-        /* Dyscalculia Mode */
         .solver.dys-mode .board-wrap { background-color: var(--bg-dys) !important; border: 2px solid var(--bl); background-image: linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px); background-size: 20px 20px; background-attachment: local; }
         .solver.dys-mode .math-pre { font-size: 1.6rem; letter-spacing: 4px; color: #000 !important; }
 
@@ -168,17 +155,39 @@
 
         .sig { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--bord); font-size: 0.9rem; color: var(--mut); font-weight: 500; }
 
-        /* Content */
         .content { margin-top: 4rem; padding-bottom: 2rem; }
         .content h2 { font-size: 1.5rem; font-weight: 800; margin: 2.5rem 0 1rem; letter-spacing: -0.5px; }
         .content h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; }
-        .content p { margin-bottom: 1.2rem; }
+        .content p { margin-bottom: 1.2rem; font-size: 1.05rem; }
         .content ul, .content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
         .content li { margin-bottom: 0.5rem; }
         .content strong { color: var(--bl); font-weight: 700; }
-        .example-box { white-space: pre; overflow-x: auto; font-family: 'Courier New', monospace; background: #f1f5f9; padding: 1.5rem; border-radius: 8px; width: fit-content; margin-bottom: 1.5rem; border: 1px solid var(--bord); font-weight: 700; color: var(--txt); }
+        
+        .step-visual-container {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid var(--bord);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: auto;
+        }
 
-        /* Overlays & Footer */
+        .step-visual-content {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--txt);
+            text-align: left; 
+            white-space: pre;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        
+        .info-box { background: #f1f5f9; padding: 1.5rem; border-left: 4px solid var(--bl); border-radius: 4px; margin: 1.5rem 0; }
+
         .ov-lay { position: fixed; inset: 0; background: rgba(15,23,42,0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.2s; }
         .ov-lay.active { opacity: 1; visibility: visible; }
         .drawer { position: fixed; inset: 0 auto 0 0; width: 300px; background: var(--surf); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: 0.3s; }
@@ -252,7 +261,7 @@
 
             <div style="margin-bottom: 2rem;">
                 <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px;">Long Division Calculator</h1>
-                <p style="color: var(--mut); font-size: 1.1rem;">Visual solver for long division with remainders or decimals. Shows every step.</p>
+                <p style="color: var(--mut); font-size: 1.1rem;">Mastering long division is mandatory for all students, but it is often frustrating without a guide. However, the LoveU Calc Long Division Calculator is your ultimate companion.</p>
             </div>
 
             <div class="calc-card">
@@ -312,79 +321,145 @@
             </div>
 
             <article class="content">
-                <h2>What is Long Division?</h2>
-                <p>Long division is a standard arithmetic algorithm used for dividing multi-digit numbers (the <strong>dividend</strong>) by another number (the <strong>divisor</strong>). Unlike simple division, which can often be done mentally, long division breaks a complex problem down into a sequence of smaller, manageable steps. This step-by-step process is crucial for ensuring accuracy, especially when dealing with large numbers or finding remainders.</p>
-                
-                <p>This calculator acts as a digital tutor. Instead of just giving you the answer (like a standard calculator), it visualizes the entire process, showing you exactly where each number comes from. It is an essential tool for students mastering arithmetic concepts in grades 3 through 6.</p>
+                <p>Whether you are a student checking your homework, a parent re-learning "new math," or a teacher creating lesson plans, our tool is designed according to your requirements. Unlike basic calculators that just show a final value, our tool is a <strong>long division step by step calculator</strong>. It shows every step- the subtraction, the "bring down" steps, and the final remainder- exactly as you write on paper.</p>
 
-                <h2>Who Should Use This Tool?</h2>
-                <p>We designed the <strong>LoveU Calc Long Division Solver</strong> for specific user needs:</p>
-                <ul>
-                    <li><strong>Students:</strong> If you are stuck on a math problem, use this tool to "check your work." Seeing the steps unfold helps you identify exactly where you might have made a calculation error.</li>
-                    <li><strong>Teachers:</strong> Use our <strong>PDF Worksheet Generator</strong> feature. With one click, you can download a randomized set of practice problems for your class, saving you time on lesson planning.</li>
-                    <li><strong>Parents:</strong> Math methods have evolved. If you are struggling to help your child because the "new math" looks different, use this tool to bridge the gap. We support both modern and traditional notations.</li>
-                    <li><strong>Users with Dyscalculia:</strong> We believe tools should be accessible. Toggle the <strong>"Access Mode"</strong> to enable a high-contrast interface with grid lines, making it easier to track numbers visually without them "floating" around the page.</li>
-                </ul>
-
-                <h2>Key Features</h2>
-                <ul>
-                    <li><strong>Multiple Notation Styles:</strong> Mathematics is universal, but symbols aren't. We support the standard US Bracket `)‾`, the European Galley `|`, and the German Colon `:`.</li>
-                    <li><strong>Remainder & Decimal Modes:</strong> Choose <strong>"Remainder Mode"</strong> for elementary school problems (e.g., 5 R 2) or <strong>"Decimal Mode"</strong> for precise, scientific answers (e.g., 5.4).</li>
-                    <li><strong>Zero Lag & Privacy:</strong> This tool runs entirely in your browser using JavaScript. No data is sent to a server, making it faster and more private than many competitors.</li>
-                </ul>
-
-                <h2>The Three Methods Explained</h2>
-                <h3>1. US/UK Method (The Bracket)</h3>
-                <p>This is the standard notation taught in North America and the United Kingdom. The divisor is placed to the left of a curved bracket, and the dividend goes inside (under the "roof"). The quotient (answer) is written on top of the line.</p>
-                
-                <h3>2. European Method (The Galley)</h3>
-                <p>Common in France, Spain, Italy, and much of Latin America. The dividend and divisor are separated by a vertical line `|`. The quotient is written in an L-shaped nook on the right side. This method often helps students keep the answer separate from the working numbers.</p>
-
-                <h3>3. German Method (The Colon)</h3>
-                <p>Common in Germany and Northern Europe. The problem is written as a linear equation (e.g., 1250 : 5 = 250). The division work proceeds downwards, similar to the US method, but without the roof structure. The equals sign clearly separates the question from the answer.</p>
-
-                <h2>How to Perform Long Division (Step-by-Step)</h2>
-                <p>The most popular way to remember the long division steps is the mnemonic <strong>"Dad, Mom, Sister, Brother"</strong> (DMSB), which stands for:</p>
-                <ol>
-                    <li><strong>D (Divide):</strong> Look at the first digit of the dividend. Determine how many times the divisor fits into it. Write that number on top (in the quotient area).</li>
-                    <li><strong>M (Multiply):</strong> Multiply the number you just wrote on top by the divisor. Write the result directly underneath the digit(s) you just divided.</li>
-                    <li><strong>S (Subtract):</strong> Subtract that result from the dividend digits to find the difference (remainder).</li>
-                    <li><strong>B (Bring Down):</strong> Bring down the next digit of the dividend to the right of your subtraction result. Now, you have a new target number to divide!</li>
-                </ol>
-                <p>Repeat this cycle until there are no more digits to bring down. If the final number is not zero and smaller than the divisor, that is your <strong>Remainder</strong>.</p>
-
-                <h3>Example: 175 ÷ 5</h3>
-                <p>Let's walk through dividing 175 by 5.</p>
-                
-                <ol>
-                    <li><strong>Step 1 - Divide:</strong> 5 cannot fit into 1. So, we look at the first two digits: 17. 5 goes into 17 <strong>3 times</strong> (because 5 × 3 = 15). We write the '3' on top.</li>
-                    <li><strong>Step 2 - Multiply:</strong> Multiply the 3 by 5 to get <strong>15</strong>. Write '15' under the '17'.</li>
-                    <li><strong>Step 3 - Subtract:</strong> Draw a line and subtract: 17 - 15 = <strong>2</strong>.</li>
-                    <li><strong>Step 4 - Bring Down:</strong> Bring down the next digit (5) next to the 2. The new number is <strong>25</strong>.</li>
-                    <li><strong>Repeat:</strong> 5 goes into 25 exactly <strong>5 times</strong>. Write '5' on top. Multiply (5 × 5 = 25) and subtract (25 - 25 = 0). The remainder is 0.</li>
-                </ol>
-
-                <p><strong>The Final Result:</strong></p>
-                <div class="example-box">
-   035
-5)175
-  -15
-  ---
-   25
-  -25
-  ---
-    0
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+<div style="margin-left:2.5ch; margin-bottom:5px; color:var(--c-quo); font-weight:800;">QUOTIENT (Answer)</div>
+<div style="font-size:1.8rem; line-height:1; display:flex; align-items:baseline;">
+    <span style="color:var(--pk); font-weight:800;">DIVISOR</span>
+    <span style="margin:0 5px;">)</span>
+    <span style="color:var(--bl); font-weight:800; border-top:2px solid #000; padding-top:2px;">DIVIDEND</span>
+</div>
+                    </div>
                 </div>
 
+                <h2>Features of This Tool</h2>
+                <p>We designed this tool to make it one of the most comprehensive <strong>long division calculator with work shown</strong> on the web.</p>
+                <ol>
+                    <li><strong>Step-by-Step calculation:</strong> Watch the problem solve itself row-by-row. We use the classic "DMSB" (Divide, Multiply, Subtract, Bring down) method.</li>
+                    <li><strong>Three Notation Styles:</strong> Math is global. We support:
+                        <ul>
+                            <li>US/UK: The standard bracket method `)‾`.</li>
+                            <li>Europe: The Galley method (vertical line `|`).</li>
+                            <li>Germany: The Colon method (`:`).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Decimal or Remainder Mode:</strong> We have two modes. Use reminder mode (e.g., 5 R 2) for normal calculations, and decimal mode (e.g., 5.412) in case of precise scientific calculations.</li>
+                    <li><strong>Dyscalculia Support:</strong> A unique "Access Mode" that adds high-contrast grid lines and easier-to-read fonts for students with learning differences.</li>
+                    <li><strong>Auto Mode:</strong> If you feel bored with clicking on the Next button again and again, just click on the Auto button and watch the steps play</li>
+                    <li><strong>PDF Worksheets:</strong> You can instantly download worksheets based on the current problem to practice long division on your own.</li>
+                </ol>
+
+                <h2>How to Use This Calculator</h2>
+                <p>Using this <strong>long division calculator</strong> is intuitive. Follow these steps to get your solution:</p>
+                <ol>
+                    <li><strong>Enter the Dividend:</strong> Type the number you want to divide (the large number) into the first box.</li>
+                    <li><strong>Enter the Divisor:</strong> Type the number you are dividing by into the second box.</li>
+                    <li><strong>Select Your Mode:</strong>
+                        <ul>
+                            <li>Choose Remainder (R) for elementary math (finding what is left over).</li>
+                            <li>Choose Decimal (.) if you want to calculate precise values past the decimal point.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Choose Notation:</strong> Select your own style (US, Europe, or Germany) from the dropdown.</li>
+                    <li><strong>Solve:</strong> Click "Solve Step-by-Step." You can then use the Auto/Next buttons to watch the math unfold at your own pace.</li>
+                </ol>
+
+                <h2>How to perform long division?</h2>
+                <p>If you are using this tool to learn, it is important to understand the rhythm of long division. We follow the standard algorithmic cycle:</p>
+                <ol>
+                    <li><strong>Divide:</strong> How many times does the divisor fit into the current digit?</li>
+                    <li><strong>Multiply:</strong> Multiply that number by the divisor.</li>
+                    <li><strong>Subtract:</strong> Find the difference.</li>
+                    <li><strong>Bring Down:</strong> Bring the next digit down to continue.</li>
+                </ol>
+
+                <h3>Example: 175 ÷ 5</h3>
+                <p>When you enter this into our long division calculator with work shown, here is what happens:</p>
+                
+                <p><strong>1. Divide:</strong> 5 goes into 17 3 times. (3 × 5 = 15). We write the 3 on top.</p>
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+   <span style="color:var(--c-quo)"> 3</span>
+<span style="color:var(--pk)">5</span>)<span style="color:var(--bl)">17</span>5
+                    </div>
+                </div>
+
+                <p><strong>2. Multiply:</strong> Multiply the 3 by 5 to get 15. Write it under the 17.</p>
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+   <span style="color:var(--c-quo)"> 3</span>
+<span style="color:var(--pk)">5</span>)175
+  <span style="color:var(--c-sub)">-15</span>
+                    </div>
+                </div>
+
+                <p><strong>3. Subtract:</strong> 17 minus 15 leaves 2.</p>
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+   <span style="color:var(--c-quo)"> 3</span>
+<span style="color:var(--pk)">5</span>)175
+  -15
+  ---
+   <span style="color:var(--bl)"> 2</span>
+                    </div>
+                </div>
+
+                <p><strong>4. Bring Down:</strong> Bring down the 5 to make 25.</p>
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+   <span style="color:var(--c-quo)"> 3</span>
+<span style="color:var(--pk)">5</span>)175
+  -15
+  ---
+    2<span style="color:var(--bl)">5</span>
+                    </div>
+                </div>
+
+                <p><strong>5. Repeat:</strong> 5 goes into 25 exactly 5 times. Write 5 on top. (5 × 5 = 25). Subtract to get 0.</p>
+                <div class="step-visual-container">
+                    <div class="step-visual-content">
+   <span style="color:var(--c-quo)"> 35</span>
+<span style="color:var(--pk)">5</span>)175
+  -15
+  ---
+    25
+   <span style="color:var(--c-sub)">-25</span>
+   ---
+     <span style="color:var(--bl)">0</span>
+                    </div>
+                </div>
+
+                <p><strong>Final Answer:</strong> 35.</p>
+
+                <h2>Remainder Mode (The "Cookie" Method)</h2>
+                <p>Used in elementary school. If you have 10 cookies and 3 friends:</p>
+                <div class="info-box">
+                    <p style="margin:0;">10 ÷ 3 = 3 cookies each.<br>
+                    <strong>Remainder:</strong> 1 cookie left over.<br>
+                    <strong>Result:</strong> 3 R 1.</p>
+                </div>
+
+                <h2>Decimal Mode (The "Money" Method)</h2>
+                <p>Used in higher math and science. If you have $10.00 and 3 friends:</p>
+                <p>We add a decimal point and zeros (10.00) to continue the division.<br>
+                <strong>Result:</strong> 3.33 (The calculation continues past the whole number).</p>
+                <p>Our long division calculator with decimals handles both scenarios instantly.</p>
+
+                <h2>Why We Added "Dyscalculia Support"</h2>
+                <p>Math should be accessible to everyone. Many students struggle with long division not because they don't understand the logic, but because the numbers seem to "float" on the page.</p>
+                <p>By toggling the Access Mode on our tool, we apply a high-contrast overlay and strict grid alignment. This helps users visually track columns (Place Value) without getting lost, making it one of the most accessible calculator long division tools available.</p>
+
                 <h2>Frequently Asked Questions (FAQ)</h2>
-                <h3>What is a remainder?</h3>
-                <p>A remainder is the amount "left over" after performing integer division. For example, if you have 7 cookies and share them equally between 2 people, each person gets 3 cookies, and 1 cookie remains. In math terms: 7 ÷ 2 = 3 R 1.</p>
-                
-                <h3>Can I divide by zero?</h3>
-                <p>No. Division by zero is undefined in mathematics. If you attempt to enter "0" in the divisor field, this calculator will alert you that the operation is impossible. Splitting something into zero groups doesn't make logical sense!</p>
-                
-                <h3>Why does the calculator show decimals instead of a remainder?</h3>
-                <p>Check the "Mode" toggle at the top of the calculator. If you have selected <strong>"Decimal Mode"</strong>, the tool will continue dividing past the decimal point to give you a precise answer. Switch to <strong>"Remainder Mode"</strong> if you want the traditional whole number result.</p>
+                <h3>Q. Can this calculator solve for decimals?</h3>
+                <p>A: Yes. Simply select "Decimal Mode" at the top of the tool. It is a fully functional and comprehensive long division calculator with steps decimals supported.</p>
+
+                <h3>Q: Does this tool solve polynomials?</h3>
+                <p>A: No, this tool is designed for arithmetic long division (numbers). For algebraic equations (like x² + 2x), you would need a specific polynomial solver.</p>
+
+                <h3>Q: Can I print the solution?</h3>
+                <p>A: Yes! Click the "PDF Worksheet" button to generate a clean, printable version of the current problem and solution steps. It is perfect for homework or classroom handouts.</p>
             </article>
         </div>
     </main>
